@@ -5,8 +5,8 @@
     <description>邵林，区块链底层开发者</description>
     <link>https://sllinye.github.io//</link>
     <atom:link href="https://sllinye.github.io//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 28 Jan 2018 19:35:31 +0800</pubDate>
-    <lastBuildDate>Sun, 28 Jan 2018 19:35:31 +0800</lastBuildDate>
+    <pubDate>Sun, 28 Jan 2018 19:42:54 +0800</pubDate>
+    <lastBuildDate>Sun, 28 Jan 2018 19:42:54 +0800</lastBuildDate>
     <generator>Jekyll v3.5.1</generator>
     
       <item>
@@ -21,24 +21,37 @@ Ubuntu（友帮拓、优般图、乌班图）是一个以桌面应用为主的�
 
 &lt;h2 id=&quot;虚拟机&quot;&gt;虚拟机：&lt;/h2&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Parallels_Desktop_13.2.0&lt;/code&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;链接:https://pan.baidu.com/s/1pMfMber &lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; 密码:a4ms&lt;/code&gt;
-Parallels Desktop 13 for Mac破解版是一款macOS平台上功能非常强大的虚拟机软件，相比于上一代提升了性能，搭载数以百计的新功能和更多工具，可供您在 Mac 和 Windows 上处理日常任务。清理驱动器、保护私人文件、下载视频、制作 GIF 等。针对 macOS High Sierra 和 Windows 10 Fall Creators Update 进行了优化。Parallels Desktop 13 将 Mac Touch Bar 集成到 Microsoft Outlook、Word、Excel 和 PowerPoint，以及 Internet Explorer、Microsoft Edge、Google Chrome™、Mozilla Firefox 和 Opera 等浏览器。
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Parallels_Desktop_13.2.0&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;链接:https://pan.baidu.com/s/1pMfMber &lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; 密码:a4ms&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Parallels Desktop 13 for Mac破解版是一款macOS平台上功能非常强大的虚拟机软件，相比于上一代提升了性能，搭载数以百计的新功能和更多工具，可供您在 Mac 和 Windows 上处理日常任务。清理驱动器、保护私人文件、下载视频、制作 GIF 等。针对 macOS High Sierra 和 Windows 10 Fall Creators Update 进行了优化。Parallels Desktop 13 将 Mac Touch Bar 集成到 Microsoft Outlook、Word、Excel 和 PowerPoint，以及 Internet Explorer、Microsoft Edge、Google Chrome™、Mozilla Firefox 和 Opera 等浏览器。
     双击压缩包，点击打开，按照提示一步步走即可，选择 buntu Linux 下载镜像文件。&lt;/p&gt;
 &lt;h1 id=&quot;ubuntu-安装谷歌浏览&quot;&gt;Ubuntu 安装谷歌浏览&lt;/h1&gt;
-&lt;p&gt;下载安装Google Chrome浏览 deb包
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo dpkg -i google-chrome-stable_current_amd64.deb&lt;/code&gt;
-安装依赖
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get -f install libappindicator1 libindicator7&lt;/code&gt;
-安装谷歌浏览器
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo dpkg -i google-chrome-stable_current_amd64.deb&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;下载安装Google Chrome浏览 deb包&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo dpkg -i google-chrome-stable_current_amd64.deb&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;安装依赖&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get -f install libappindicator1 libindicator7&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;安装谷歌浏览器&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo dpkg -i google-chrome-stable_current_amd64.deb&lt;/code&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;ubuntu-搜狗输入法&quot;&gt;Ubuntu 搜狗输入法&lt;/h1&gt;
-&lt;p&gt;下载下来deb包之后，直接
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo dpkg -i sogoupinyin_2.1.0.0086_amd64.deb&lt;/code&gt;
-如果遇到有依赖问题
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get -f install&lt;/code&gt;
-安装完之后，打开__Language Support__，将系统输入法设置为fcitx，然后重启/注销登录
+&lt;p&gt;下载下来deb包之后，直接&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo dpkg -i sogoupinyin_2.1.0.0086_amd64.deb&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;如果遇到有依赖问题&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get -f install&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;安装完之后，打开__Language Support__，将系统输入法设置为fcitx，然后重启/注销登录
 &lt;img src=&quot;http://p396ounog.bkt.clouddn.com/5966382-a311fa59ba4cfba6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;登入系统后，配置fcitx，添加sogou输入法&lt;img src=&quot;http://p396ounog.bkt.clouddn.com/5966382-129c0665ce957f50.png&quot; alt=&quot;&quot; /&gt;
@@ -47,12 +60,17 @@ Parallels Desktop 13 for Mac破解版是一款macOS平台上功能非常强大�
 &lt;p&gt;先去&lt;code class=&quot;highlighter-rouge&quot;&gt;https://golang.org/&lt;/code&gt;官网下载Go 语言安装包&lt;/p&gt;
 &lt;h5 id=&quot;安装go&quot;&gt;安装Go&lt;/h5&gt;
 &lt;p&gt;以管理员的身份（sudo）将安装包（压缩包）解压到/usr/local
-在压缩包所在的文件夹下打开终端（也可以 cd 到压缩包所在的文件夹）
-在终端中输入命令&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.t ar.gz&lt;/code&gt;
-然后系统会提示您输入密码，密码就是开机密码
-解压完成后，在&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/local&lt;/code&gt;路径下面有一个&lt;code class=&quot;highlighter-rouge&quot;&gt;go&lt;/code&gt;文件夹
-添加&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/local/go/bin&lt;/code&gt;到环境变量&lt;code class=&quot;highlighter-rouge&quot;&gt;PATH&lt;/code&gt;中。
-通过&lt;code class=&quot;highlighter-rouge&quot;&gt;vi&lt;/code&gt;命令将&lt;code class=&quot;highlighter-rouge&quot;&gt;export PATH=$PATH:/usr/local/go/bin&lt;/code&gt;添加到&lt;code class=&quot;highlighter-rouge&quot;&gt;$HOME/.profile &lt;/code&gt;中&lt;/p&gt;
+在压缩包所在的文件夹下打开终端（也可以 cd 到压缩包所在的文件夹）&lt;/p&gt;
+
+&lt;p&gt;在终端中输入命令&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.t ar.gz&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;然后系统会提示您输入密码，密码就是开机密码
+解压完成后，&lt;/p&gt;
+
+&lt;p&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/local&lt;/code&gt;路径下面有一个&lt;code class=&quot;highlighter-rouge&quot;&gt;go&lt;/code&gt;文件夹
+添加&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/local/go/bin&lt;/code&gt;到环境变量&lt;code class=&quot;highlighter-rouge&quot;&gt;PATH&lt;/code&gt;中。&lt;/p&gt;
+
+&lt;p&gt;通过&lt;code class=&quot;highlighter-rouge&quot;&gt;vi&lt;/code&gt;命令将&lt;code class=&quot;highlighter-rouge&quot;&gt;export PATH=$PATH:/usr/local/go/bin&lt;/code&gt;添加到&lt;code class=&quot;highlighter-rouge&quot;&gt;$HOME/.profile &lt;/code&gt;中&lt;/p&gt;
 
 &lt;p&gt;操作步骤如下：&lt;/p&gt;
 &lt;ul&gt;
