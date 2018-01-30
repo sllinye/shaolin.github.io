@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <title>区块链 Go并发编程 之 管道 Channel</title>
+  <meta name="description" content="区块链，管道 channel,非缓冲chanel,缓冲channel,死锁,进程，线程，多线程，并发，串行，随机数，线程堵塞，线程上锁，互斥，线程管理">
+  <meta name="author" content="黎跃春">
+
+  <meta name="keywords" content="区块链，管道 channel,非缓冲chanel,缓冲channel,死锁,进程，线程，多线程，并发，串行，随机数，线程堵塞，线程上锁，互斥，线程管理"
+  />
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="区块链 Go并发编程 之 管道 Channel">
+  <meta name="twitter:description" content="区块链，管道 channel,非缓冲chanel,缓冲channel,死锁,进程，线程，多线程，并发，串行，随机数，线程堵塞，线程上锁，互斥，线程管理">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="区块链 Go并发编程 之 管道 Channel">
+  <meta property="og:description" content="区块链，管道 channel,非缓冲chanel,缓冲channel,死锁,进程，线程，多线程，并发，串行，随机数，线程堵塞，线程上锁，互斥，线程管理">
+  <meta property="og:site_name" content="区块链，管道 channel,非缓冲chanel,缓冲channel,死锁,进程，线程，多线程，并发，串行，随机数，线程堵塞，线程上锁，互斥，线程管理e"
+  />
+
+
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+
+
+  <link rel="stylesheet" href=" /css/main.css ">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="https://sllinye.github.io//2018/01/28/blockchain-Channel/">
+  <link rel="alternate" type="application/rss+xml" title="邵林区块链博客" href="https://sllinye.github.io/ /feed.xml
+    ">
+
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+  <!-- 站点统计 -->
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+
+  <!-- 百度统计 -->
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f3290601666dc2ca016a38c340c144f1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+  
+
+  <!-- google 统计 -->
+  
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-104237177-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</head>
+
+
+<body>
+
+  <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      分类
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+          
+      </div>
+    </span> <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">
+          <a href="/#blog" title="前往 邵林区块链博客 的主页" class="blog-button">
+            <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+            <div class="info">
+              <div class="info-back">
+                <h2 style="font-size: 12px">
+                   微信 
+                   linye900301 
+                </h2>
+                <p style="font-size: 6px">
+                   区块链／链乎 
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for 邵林区块链博客" class="blog-button">邵林区块链博客</a></h1>
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">邵林，区块链底层开发者</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" /> 
+
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                <li class="navigation__item"><a href="/tags" title="tags">分类</a></li>
+                
+                <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;-webkit-justify-content:center">
+          <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-right:10px">
+            <img src="/images/lianhu.jpg" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">公众号</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-left:10px">
+            <img src="/images/zhishixingqiu.png" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">个人微信</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="panel-cover--overlay cover-clear"></div>
+  
+
+  </div>
+</header>
+
+
+  <div class="content-wrapper">
+    <div class="content-wrapper__inner">
+      <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">区块链 Go并发编程 之 管道 Channel</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/>
+      <time datetime="2018-01-28 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2018-01-28</time>
+
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <h1 id="go-管道-channel">GO 管道 channel</h1>
+<h2 id="什么是管道">什么是管道</h2>
+<blockquote>
+  <p>管道是Go语言在语言级别上提供的goroutine间的<strong>通讯方式</strong>，我们可以使用channel在多个goroutine之间传递消息。channel是<strong>进程内</strong>的通讯方式，是不支持跨进程通信的，如果需要进程间通讯的话，可以使用Socket等网络方式。</p>
+</blockquote>
+
+<p>也可以简单的理解为：</p>
+
+<blockquote>
+  <p>在多个线程之间传递数据，同步数据的一种手段，而对通道的操作本身也是同步数据，同一时刻，仅有一个线程可以向 channel 发送数据，同样的，同一时刻也只能有一个线程能从 channel 读取数据。</p>
+</blockquote>
+
+<h2 id="chnnel-语法">chnnel 语法</h2>
+<h3 id="能够存储数据的类型">能够存储数据的类型</h3>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">chan</span><span class="x"> </span><span class="n">T</span><span class="x"> </span><span class="c">//T 为类型</span><span class="x">
+</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="x"> </span><span class="c">//缓冲int类型</span><span class="x">
+</span><span class="k">chan</span><span class="x"> </span><span class="kt">float32</span><span class="x"> </span><span class="n">缓冲float</span><span class="x"> </span><span class="n">类型</span><span class="x">
+
+</span></code></pre>
+</div>
+<ul>
+  <li>可以设置别名</li>
+</ul>
+
+<p><code class="highlighter-rouge">type IntChan chan int</code></p>
+
+<h3 id="声明">声明</h3>
+
+<p><code class="highlighter-rouge">chan</code>是声明管道的关键字</p>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">var</span><span class="x"> </span><span class="n">a</span><span class="x"> </span><span class="kt">int</span><span class="x"> </span><span class="c">//声明一个int类型变量a</span><span class="x">
+</span><span class="k">var</span><span class="x"> </span><span class="n">inChan</span><span class="x"> </span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="x"> </span><span class="c">//只能缓冲int 类型</span><span class="x">
+</span><span class="k">var</span><span class="x"> </span><span class="n">strChan</span><span class="x"> </span><span class="k">chan</span><span class="x"> </span><span class="kt">string</span><span class="x"> </span><span class="c">//声明一个strChan管道，并可以写入string类型</span><span class="x">
+</span><span class="c">//除了上面的声明方法还可以用`make`来声明</span><span class="x">
+</span><span class="n">a</span><span class="o">:=</span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">)</span><span class="x">
+</span><span class="n">a</span><span class="o">:=</span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">,</span><span class="m">10</span><span class="p">)</span><span class="x">
+</span></code></pre>
+</div>
+
+<h3 id="非缓冲chanel与缓冲channel对比">非缓冲chanel与缓冲channel对比</h3>
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="c">//非缓冲管道，必须等待通道取数据，会出现堵塞</span><span class="x">
+</span><span class="n">a</span><span class="o">:=</span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">)</span><span class="x">
+
+
+</span><span class="c">//缓冲管道</span><span class="x">
+</span><span class="n">a</span><span class="o">:=</span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">,</span><span class="m">10</span><span class="p">)</span><span class="x">
+
+</span><span class="nb">len</span><span class="p">()</span><span class="c">//长度 上面初始化的非缓冲通道，缓冲通道都为0</span><span class="x">
+</span><span class="nb">cap</span><span class="p">()</span><span class="c">//容量  上面初始化的非缓冲通道为0，缓冲通道为10</span><span class="x">
+</span></code></pre>
+</div>
+
+<blockquote>
+  <p>非缓冲channel：</p>
+</blockquote>
+
+<blockquote>
+  <p>只能缓冲1个数据,无缓冲的读写实际为同步操作，必须一写一读操作匹配时，才会继续，否则会死锁。
+非缓冲的读和写操作必须“相遇”才能执行，否则会阻塞。
+比如快递员给你送快递，快递员送到你手里，签收完成后，快递员才可以离开</p>
+</blockquote>
+
+<blockquote>
+  <p>缓冲channel：
+最大缓冲等于容量，相当于一个<strong>先进先出</strong>的队列。有缓冲的管道，只有当管道容量已存满，在未取走值的情况下继续放值时才会发生阻塞。</p>
+</blockquote>
+
+<p>比如，快递员给你送快递，快递员把快递放到快递箱里面，如果快递箱放满了，没有取走情况下会出现堵塞</p>
+
+<h2 id="从管道中-取值-的方法以及一些案例">从管道中 取值 的方法以及一些案例</h2>
+
+<blockquote>
+  <p>fmt.Println(&lt;-c)//从管道中取值，取出c,并打印。</p>
+</blockquote>
+
+<blockquote>
+  <p>&lt;-c //从管道中取值，不输出结果。(对于非缓存管道，必须把值取出来，才能放别的)</p>
+</blockquote>
+
+<blockquote>
+  <p>a := &lt;-c//将管道中取出的值，赋值给 a</p>
+</blockquote>
+
+<blockquote>
+  <p>k, ok := &lt;-c //从管道里面取值赋值给k，如果赋值成功，ok 为 true，如果赋值不成功，ok 为 flase</p>
+</blockquote>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">package</span><span class="x"> </span><span class="n">main</span><span class="x">
+
+</span><span class="k">import</span><span class="x"> </span><span class="s">"fmt"</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+	</span><span class="c">// 创建一个管道</span><span class="x">
+	</span><span class="n">c</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">,</span><span class="x"> </span><span class="m">1</span><span class="p">)</span><span class="x">
+	</span><span class="c">// 查看写入管道中数据的数量</span><span class="x">
+	</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="x">
+	</span><span class="c">// 查看管道的缓冲容量</span><span class="x">
+	</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="nb">cap</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="x">
+
+	</span><span class="n">c</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="m">10</span><span class="x"> </span><span class="c">//写入数据，这条管道只能写入int类型</span><span class="x">
+
+	</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="x">
+	</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="nb">cap</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="x">
+
+	</span><span class="c">// &lt;-c //从管道里面取值</span><span class="x">
+	</span><span class="c">// fmt.Println("从管道里面取值：", &lt;-c)</span><span class="x">
+	</span><span class="n">a</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="o">&lt;-</span><span class="n">c</span><span class="x"> </span><span class="c">//将管道里面取出来的值赋给a</span><span class="x">
+	</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"a = "</span><span class="p">,</span><span class="x"> </span><span class="n">a</span><span class="p">)</span><span class="x">
+	</span><span class="n">c</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="m">20</span><span class="x">
+	</span><span class="n">k</span><span class="p">,</span><span class="x"> </span><span class="n">ok</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="o">&lt;-</span><span class="n">c</span><span class="x"> </span><span class="c">//从管理里面取值赋给k，如果赋值成功，ok为true</span><span class="x">
+
+	</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="x"> </span><span class="s">"  "</span><span class="p">,</span><span class="x"> </span><span class="n">ok</span><span class="p">)</span><span class="x">
+	</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="x">
+	</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="nb">cap</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="x">
+
+</span><span class="p">}</span><span class="x">
+</span><span class="n">输出为</span><span class="err">：</span><span class="x">
+</span><span class="m">0</span><span class="x">
+</span><span class="m">1</span><span class="x">
+</span><span class="m">1</span><span class="x">
+</span><span class="m">1</span><span class="x">
+</span><span class="n">a</span><span class="x"> </span><span class="o">=</span><span class="x">  </span><span class="m">10</span><span class="x">
+</span><span class="m">20</span><span class="x">    </span><span class="no">true</span><span class="x">
+
+</span></code></pre>
+</div>
+<p>下面案例是错的，造成死锁原因，没有复制，但一直等待取值</p>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">package</span><span class="x"> </span><span class="n">main</span><span class="x">
+
+</span><span class="k">import</span><span class="x"> </span><span class="s">"fmt"</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+
+	</span><span class="c">// 创建一个管道</span><span class="x">
+	</span><span class="n">c</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">,</span><span class="x"> </span><span class="m">1</span><span class="p">)</span><span class="x">
+
+	</span><span class="c">// 从管道里面取值赋给a</span><span class="x">
+	</span><span class="n">a</span><span class="p">,</span><span class="x"> </span><span class="n">ok</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="o">&lt;-</span><span class="n">c</span><span class="x"> </span><span class="c">//管道内没有数据，无法取出，一直等待，出现死锁。</span><span class="x">
+
+	</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="x"> </span><span class="s">"  "</span><span class="p">,</span><span class="x"> </span><span class="n">ok</span><span class="p">)</span><span class="x">
+
+</span><span class="p">}</span><span class="x">
+
+</span><span class="n">输出为</span><span class="x">
+</span><span class="n">fatal</span><span class="x"> </span><span class="kt">error</span><span class="o">:</span><span class="x"> </span><span class="n">all</span><span class="x"> </span><span class="n">goroutines</span><span class="x"> </span><span class="n">are</span><span class="x"> </span><span class="n">asleep</span><span class="x"> </span><span class="o">-</span><span class="x"> </span><span class="n">deadlock</span><span class="o">!</span><span class="x">
+
+</span><span class="n">goroutine</span><span class="x"> </span><span class="m">1</span><span class="x"> </span><span class="p">[</span><span class="k">chan</span><span class="x"> </span><span class="n">receive</span><span class="p">]</span><span class="o">:</span><span class="x">
+</span><span class="n">main</span><span class="o">.</span><span class="n">main</span><span class="p">()</span><span class="x">
+	</span><span class="o">/</span><span class="n">BlockChain</span><span class="o">-</span><span class="n">learn</span><span class="o">/</span><span class="m">002</span><span class="n">_管道</span><span class="o">.</span><span class="k">go</span><span class="o">:</span><span class="m">11</span><span class="x"> </span><span class="o">+</span><span class="m">0x55</span><span class="x">
+</span><span class="n">exit</span><span class="x"> </span><span class="n">status</span><span class="x"> </span><span class="m">2</span><span class="x">
+</span><span class="n">原因</span><span class="err">：</span><span class="c">//a, ok := &lt;-c //管道内没有数据，无法取出，一直等待，出现死锁。</span><span class="x">
+</span></code></pre>
+</div>
+
+<p>解决上面案例的方法</p>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">package</span><span class="x"> </span><span class="n">main</span><span class="x">
+
+</span><span class="k">import</span><span class="x"> </span><span class="s">"fmt"</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+
+	</span><span class="c">// 创建一个管道</span><span class="x">
+	</span><span class="n">c</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">,</span><span class="x"> </span><span class="m">1</span><span class="p">)</span><span class="x">
+
+	</span><span class="n">c</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="m">10</span><span class="x"> </span><span class="c">//给管道传值</span><span class="x">
+
+	</span><span class="c">// 从管道里面取值赋给a</span><span class="x">
+	</span><span class="n">a</span><span class="p">,</span><span class="x"> </span><span class="n">ok</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="o">&lt;-</span><span class="n">c</span><span class="x"> </span><span class="c">//同步</span><span class="x">
+
+	</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="x"> </span><span class="s">"  "</span><span class="p">,</span><span class="x"> </span><span class="n">ok</span><span class="p">)</span><span class="x">
+
+</span><span class="p">}</span><span class="x">
+</span><span class="n">输出为</span><span class="x">
+</span><span class="m">10</span><span class="x">    </span><span class="no">true</span><span class="x">
+</span></code></pre>
+</div>
+<p>在子线程中去管道的值，让主线程休眠，给主线程足够读多时间</p>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">package</span><span class="x"> </span><span class="n">main</span><span class="x">
+
+</span><span class="k">import</span><span class="x"> </span><span class="p">(</span><span class="x">
+	</span><span class="s">"fmt"</span><span class="x">
+	</span><span class="s">"time"</span><span class="x">
+</span><span class="p">)</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+
+	</span><span class="c">// 创建一个管道</span><span class="x">
+	</span><span class="n">c</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">,</span><span class="x"> </span><span class="m">1</span><span class="p">)</span><span class="x">
+
+	</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+		</span><span class="c">// 从管道里面取值赋给a</span><span class="x">
+		</span><span class="n">a</span><span class="p">,</span><span class="x"> </span><span class="n">ok</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="o">&lt;-</span><span class="n">c</span><span class="x"> </span><span class="c">//同步</span><span class="x">
+		</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="x"> </span><span class="s">"  "</span><span class="p">,</span><span class="x"> </span><span class="n">ok</span><span class="p">)</span><span class="x">
+	</span><span class="p">}()</span><span class="x">
+
+	</span><span class="n">c</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="m">10</span><span class="x">
+	</span><span class="c">// 休眠一会儿是为了等待子线程处理任务</span><span class="x">
+	</span><span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span><span class="x">
+
+</span><span class="p">}</span><span class="x">
+</span><span class="n">输出为</span><span class="x">
+</span><span class="m">10</span><span class="x">    </span><span class="no">true</span><span class="x">
+
+</span></code></pre>
+</div>
+<p>使用<code class="highlighter-rouge">sync</code></p>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">package</span><span class="x"> </span><span class="n">main</span><span class="x">
+
+</span><span class="k">import</span><span class="x"> </span><span class="p">(</span><span class="x">
+	</span><span class="s">"fmt"</span><span class="x">
+	</span><span class="s">"sync"</span><span class="x">
+</span><span class="p">)</span><span class="x">
+
+</span><span class="k">var</span><span class="x"> </span><span class="n">sy</span><span class="x"> </span><span class="n">sync</span><span class="o">.</span><span class="n">WaitGroup</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+
+	</span><span class="c">// 创建一个管道</span><span class="x">
+	</span><span class="n">c</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">,</span><span class="x"> </span><span class="m">1</span><span class="p">)</span><span class="x">
+	</span><span class="n">sy</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="x">
+	</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x"> </span><span class="c">//子线程</span><span class="x">
+		</span><span class="c">// 从管道里面取值赋给a</span><span class="x">
+		</span><span class="n">a</span><span class="p">,</span><span class="x"> </span><span class="n">ok</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="o">&lt;-</span><span class="n">c</span><span class="x"> </span><span class="c">//同步</span><span class="x">
+		</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="x"> </span><span class="s">"  "</span><span class="p">,</span><span class="x"> </span><span class="n">ok</span><span class="p">)</span><span class="x">
+		</span><span class="n">sy</span><span class="o">.</span><span class="n">Done</span><span class="p">()</span><span class="x">
+	</span><span class="p">}()</span><span class="x">
+
+	</span><span class="n">c</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="m">10</span><span class="x">
+	</span><span class="n">sy</span><span class="o">.</span><span class="n">Wait</span><span class="p">()</span><span class="x">
+</span><span class="p">}</span><span class="x">
+
+</span><span class="n">输出为</span><span class="x">
+</span><span class="m">10</span><span class="x">    </span><span class="no">true</span><span class="x">
+</span></code></pre>
+</div>
+
+<h2 id="channel-解决并发编程造成的死锁">channel 解决并发编程造成的死锁</h2>
+
+<p>下面channle与sync多线程编程的对比</p>
+
+<p>非缓冲管道中，依次循环存入值，并逐个取出，并且在子线程</p>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">package</span><span class="x"> </span><span class="n">main</span><span class="x">
+
+</span><span class="k">import</span><span class="x"> </span><span class="p">(</span><span class="x">
+	</span><span class="s">"fmt"</span><span class="x">
+	</span><span class="s">"sync"</span><span class="x">
+</span><span class="p">)</span><span class="x">
+
+</span><span class="k">var</span><span class="x"> </span><span class="n">wg</span><span class="x"> </span><span class="n">sync</span><span class="o">.</span><span class="n">WaitGroup</span><span class="x"> </span><span class="c">//队列</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+
+	</span><span class="c">// 先创建一个非缓冲管道</span><span class="x">
+	</span><span class="n">c</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">)</span><span class="x">
+	</span><span class="n">wg</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="x">
+	</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x"> </span><span class="c">//子线程</span><span class="x">
+		</span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">10</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+			</span><span class="n">c</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="c">//写入数据</span><span class="x">
+			</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"写入数据"</span><span class="p">)</span><span class="x">
+		</span><span class="p">}</span><span class="x">
+		</span><span class="n">wg</span><span class="o">.</span><span class="n">Done</span><span class="p">()</span><span class="x">
+	</span><span class="p">}()</span><span class="x">
+
+	</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+		</span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">10</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+			</span><span class="n">a</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="o">&lt;-</span><span class="n">c</span><span class="x">
+			</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="x"> </span><span class="c">//读取数据</span><span class="x">
+			</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"读取数据"</span><span class="p">)</span><span class="x">
+		</span><span class="p">}</span><span class="x">
+		</span><span class="n">wg</span><span class="o">.</span><span class="n">Done</span><span class="p">()</span><span class="x">
+	</span><span class="p">}()</span><span class="x">
+
+	</span><span class="n">wg</span><span class="o">.</span><span class="n">Wait</span><span class="p">()</span><span class="x">
+
+</span><span class="p">}</span><span class="x">
+
+</span></code></pre>
+</div>
+<p>用<code class="highlighter-rouge">channel</code> 实现，注意close与range结合</p>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="x">
+</span><span class="k">package</span><span class="x"> </span><span class="n">main</span><span class="x">
+
+</span><span class="k">import</span><span class="x"> </span><span class="s">"fmt"</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+	</span><span class="n">c</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">)</span><span class="x">
+
+	</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+		</span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">10</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+			</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"------"</span><span class="p">)</span><span class="x">
+			</span><span class="n">c</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="n">i</span><span class="x">
+		</span><span class="p">}</span><span class="x">
+		</span><span class="nb">close</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="x">
+	</span><span class="p">}()</span><span class="x">
+
+	</span><span class="c">// &lt;-c</span><span class="x">
+
+	</span><span class="k">for</span><span class="x"> </span><span class="n">n</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="k">range</span><span class="x"> </span><span class="n">c</span><span class="x"> </span><span class="p">{</span><span class="x">
+		</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"++++++++++"</span><span class="p">)</span><span class="x">
+		</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="x">
+	</span><span class="p">}</span><span class="x">
+
+
+</span><span class="p">}</span><span class="x">
+</span></code></pre>
+</div>
+<blockquote>
+  <p>注：
+		for i := range c能够不断的读取channel里面的数据，直到该channel被显式的关闭。上面代码我们看到可以显式的关闭channel，生产者通过内置函数close关闭channel。关闭channel之后就无法再发送任何数据了，在消费方可以通过语法v, ok := &lt;-ch测试channel是否被关闭。如果ok返回false，那么说明channel已经没有任何数据并且已经被关闭。</p>
+</blockquote>
+
+<p>队列，多个子线程执行完毕后关闭再 管道：</p>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">package</span><span class="x"> </span><span class="n">main</span><span class="x">
+
+</span><span class="k">import</span><span class="x"> </span><span class="p">(</span><span class="x">
+	</span><span class="s">"fmt"</span><span class="x">
+	</span><span class="s">"sync"</span><span class="x">
+</span><span class="p">)</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+
+	</span><span class="n">c</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">)</span><span class="x"> </span><span class="c">//创建通道</span><span class="x">
+
+	</span><span class="k">var</span><span class="x"> </span><span class="n">wg</span><span class="x"> </span><span class="n">sync</span><span class="o">.</span><span class="n">WaitGroup</span><span class="x"> </span><span class="c">//队列</span><span class="x">
+
+	</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+		</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"111111111"</span><span class="p">)</span><span class="x">
+		</span><span class="n">wg</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="x">
+		</span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">10</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+			</span><span class="n">c</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="n">i</span><span class="x">
+		</span><span class="p">}</span><span class="x">
+		</span><span class="n">wg</span><span class="o">.</span><span class="n">Done</span><span class="p">()</span><span class="x">
+	</span><span class="p">}()</span><span class="x">
+
+	</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+		</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"22222222"</span><span class="p">)</span><span class="x">
+		</span><span class="n">wg</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="x">
+		</span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">10</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+			</span><span class="n">c</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="n">i</span><span class="x">
+		</span><span class="p">}</span><span class="x">
+		</span><span class="n">wg</span><span class="o">.</span><span class="n">Done</span><span class="p">()</span><span class="x">
+	</span><span class="p">}()</span><span class="x">
+
+	</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+		</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"33333333"</span><span class="p">)</span><span class="x">
+		</span><span class="n">wg</span><span class="o">.</span><span class="n">Wait</span><span class="p">()</span><span class="x">
+		</span><span class="nb">close</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="x">
+	</span><span class="p">}()</span><span class="x">
+
+	</span><span class="k">for</span><span class="x"> </span><span class="n">n</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="k">range</span><span class="x"> </span><span class="n">c</span><span class="x"> </span><span class="p">{</span><span class="x">
+
+		</span><span class="c">// &lt;-c  有返回值</span><span class="x">
+		</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="x">
+	</span><span class="p">}</span><span class="x">
+</span><span class="p">}</span><span class="x">
+
+</span></code></pre>
+</div>
+<p>使用<code class="highlighter-rouge">channel</code>
+多个子线程执行结束后，关闭通道：</p>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">package</span><span class="x"> </span><span class="n">main</span><span class="x">
+
+</span><span class="k">import</span><span class="x"> </span><span class="p">(</span><span class="x">
+	</span><span class="s">"fmt"</span><span class="x">
+</span><span class="p">)</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+</span><span class="c">//通过通道代替队列</span><span class="x">
+	</span><span class="n">c</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">int</span><span class="p">)</span><span class="c">//</span><span class="x">
+	</span><span class="n">done</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="nb">make</span><span class="p">(</span><span class="k">chan</span><span class="x"> </span><span class="kt">bool</span><span class="p">)</span><span class="x">
+
+	</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+		</span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">10</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+			</span><span class="n">c</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="n">i</span><span class="x">
+		</span><span class="p">}</span><span class="x">
+		</span><span class="n">done</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="no">true</span><span class="x">
+	</span><span class="p">}()</span><span class="x">
+
+	</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+		</span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">10</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+			</span><span class="n">c</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="n">i</span><span class="x">
+		</span><span class="p">}</span><span class="x">
+		</span><span class="n">done</span><span class="x"> </span><span class="o">&lt;-</span><span class="x"> </span><span class="no">true</span><span class="x">
+	</span><span class="p">}()</span><span class="x">
+
+	</span><span class="k">go</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+		</span><span class="o">&lt;-</span><span class="n">done</span><span class="c">//读取数据，如果通道done里面没有数据，就会出现线程堵塞，</span><span class="x">
+		</span><span class="c">//直到有数据，才继续执行.</span><span class="x">
+		</span><span class="c">//不在子线程 函数内，会死锁</span><span class="x">
+		</span><span class="o">&lt;-</span><span class="n">done</span><span class="x">
+		</span><span class="nb">close</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="x">
+	</span><span class="p">}()</span><span class="x">
+
+	</span><span class="k">for</span><span class="x"> </span><span class="n">n</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="k">range</span><span class="x"> </span><span class="n">c</span><span class="x"> </span><span class="p">{</span><span class="x">
+		</span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="x">
+	</span><span class="p">}</span><span class="x">
+</span><span class="p">}</span><span class="x">
+
+</span></code></pre>
+</div>
+
+  </section>
+  <h2 style="color:red"><strong>版权声明：博客中的文章版权归博主所有，未经授权，禁止转载，转载请注明出处，合作请联系：linye900301(微信)</strong></h2>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">    
+                    <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2018/01/28/blockchain-Thread/" data-toggle="tooltip" data-placement="top" title="区块链 GO 主线程与子线程">上一篇：  <span>区块链 GO 主线程与子线程</span>
+            </a>
+        </li>
+        
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+  <!--PC和WAP自适应版-->
+<div id="SOHUCS" sid=区块链 Go并发编程 之 管道 Channel ></div>
+<script type="text/javascript">
+(function(){
+var appid = 'cytfSz8yx';
+var conf = 'prod_ad710bf09d342725ed536beddc68aa27';
+var width = window.innerWidth || document.documentElement.clientWidth;
+if (width < 960) {
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+</section>
+
+ <section class="footer">
+  <footer>
+    <div class="footer_div">
+      <nav class="cover-navigation navigation--social">
+        <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/6458465085" title="@6458465085 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+           
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/sllinye" title="@sllinye 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+            
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:sllinye@163.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+        </ul>
+      </nav>
+
+    </div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr id="bar_head">
+          <th colspan="11">友情链接</th>
+        </tr>
+      </thead>
+
+      <tr align="center" valign="middle">
+          <td><a href="http://www.kongyixueyuan.com">区块链技术视频网站</a></td>
+
+          <td><a href="https://www.ethereum.org">以太坊官网</a></td>
+
+          <td><a href="https://solidity.readthedocs.io/en/develop/">Solidity</a></td>
+
+          <td><a href="http://truffleframework.com/">Truffle FrameWork</a></td>
+
+          <td><a href="http://embark.readthedocs.io">Embark FrameWork</a></td>
+
+      </tr>
+      <tr align="center" valign="middle">
+
+          <td><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=3302cc3b-074e-44da-90b1-5055f1dc0d9c&amp;lang=zh">IBM开源技术微讲堂</a></td>
+
+          <td><a href="https://www.bitcoin.com/">Bitcoin.com</a></td>
+
+          <td><a href="https://github.com/bitshares/bitshares1-core">bitshares1-core</a></td>
+
+          <td><a href="https://ipfs.io">ipfs官网</a></td>
+
+          <td><a href="http://ipfser.org">ipfs中文网</a></td>
+
+      </tr>
+    </table>
+
+    <div class="footer_div">
+      <p class="copyright text-muted">
+        Copyright &copy; 2018 邵林区块链博客 京ICP备15065741号. 区块链部落QQ群：348924182
+      </p>
+      <div align="right">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- 访问统计 -->
+        <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+        </span>
+
+      </div>
+      <div>
+  </footer>
+</section>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+</body>
+
+</html>
