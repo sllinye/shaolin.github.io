@@ -208,6 +208,7 @@
 
   <section class="post">
     <h2 id="生产者与消费者关系">生产者与消费者关系</h2>
+
 <blockquote>
   <p>在channel中生产者消费者关系可以简单的理解为：</p>
 
@@ -523,7 +524,8 @@ range会不停的检测c管道中的数据，如果有数据，就读去，否�
   <p>2.在循环中创建消费者的分线程，把<code class="highlighter-rouge">i</code>的值保存在分线程中，运用的是闭包的特性</p>
 </blockquote>
 
-<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">func</span><span class="x"> </span><span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="x"> </span><span class="kt">int</span><span class="p">)</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="kt">int</span><span class="x"> </span><span class="p">{</span><span class="x">
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="c">//闭包：</span><span class="x">
+</span><span class="k">func</span><span class="x"> </span><span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="x"> </span><span class="kt">int</span><span class="p">)</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="kt">int</span><span class="x"> </span><span class="p">{</span><span class="x">
     </span><span class="k">return</span><span class="x"> </span><span class="k">func</span><span class="p">()</span><span class="x"> </span><span class="kt">int</span><span class="x"> </span><span class="p">{</span><span class="x">
         </span><span class="n">i</span><span class="o">++</span><span class="x">
         </span><span class="k">return</span><span class="x"> </span><span class="n">i</span><span class="x">
