@@ -199,12 +199,12 @@
   <ol class="post-list">
     
     <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/01/28/blockchain-Channel/" title="访问 区块链 Go并发编程 之 管道 Channel">区块链 Go并发编程 之 管道 Channel</a></h2>
-      <p class="excerpt">GO 管道 channel什么是管道  管道是Go语言在语言级别上提供的goroutine间的通讯方式，我们可以使用channel在多个goroutine之间传递消息。channel是进程内的通讯方式，是不支持跨进程通信的，如果需要进程间通讯的话，可以使用Socket等网络方式。也可以简单的理解为：  在多个线程之间传递数据，同步数据的一种手段，而对通道的操作本身也是同步数据，同一时刻，仅有一个线程可以向 channel 发送数据，同样的，同一时刻也只能有一个线程能从 channel 读取...&hellip;</p>
+      <h2 class="post-list__post-title post-title"><a href="/2018/01/31/blockchain-Channelsx/" title="访问 区块链 Go并发编程之Channel生产者-消费者模型及单向Channel">区块链 Go并发编程之Channel生产者-消费者模型及单向Channel</a></h2>
+      <p class="excerpt">生产者与消费者关系  在channel中生产者消费者关系可以简单的理解为：  生产者和消费者一定是一一配对的状态存在先看一个简单的案例，生产者与消费者关系为1:2package mainimport (	"fmt")// 生产者 对 消费者 ：1 -&gt; 2func main() {	c := make(chan int)	done := make(chan bool)	// 生产者：大黄	go func() {		for i := 0; i &lt; 100; i++ {			fmt...&hellip;</p>
       <div class="post-list__meta">        
-        <time datetime="2018-01-28 00:00:00 +0800" class="post-list__meta--date date">
+        <time datetime="2018-01-31 00:00:00 +0800" class="post-list__meta--date date">
           <img src="/images/calendar.png" width="20px" /> 
-          2018-01-28</time> 
+          2018-01-31</time> 
         <div class = "tag-img-icon">
           <img src="/images/tag-icon.svg" width="20px" /> 
         </div>
@@ -213,19 +213,19 @@
             <span class="post-list__meta--tags-right">并发</span>
           </div>
           <div class = "post-list-small-mate">
-          <a class="btn-border-small" href=/2018/01/28/blockchain-Channel/>阅读全文 » </a>
+          <a class="btn-border-small" href=/2018/01/31/blockchain-Channelsx/>阅读全文 » </a>
           </div>
       </div>
       <hr class="post-list__divider" />
     </li>
     
     <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/01/28/blockchain-Thread/" title="访问 区块链 GO并发之主线程与子线程">区块链 GO并发之主线程与子线程</a></h2>
-      <p class="excerpt">区块链 GO 并发编程 之 主线程与子线程[toc]基础概念什么是进程？  进程：一个正在运行的程序一般是一个进程，一个进程可以包含多个线程每个进程都有自己的独立的地址空间（内存空间），简单的理解一个运行程序为一个进程什么是线程  线程：一条有序的CPU命令的集合体线程有就绪，阻塞和运行三个基本状态什么是多线程  多线程：多条有序的CPU命令的结合体  备注：一个CPU在同一时刻只能执行一个CPU命令假设只有一个CPU，能不能进行多线程编程  3个线程: 并发编程线程1: 5个命令线程2：...&hellip;</p>
+      <h2 class="post-list__post-title post-title"><a href="/2018/01/30/blockchain-Channel/" title="访问 区块链 Go并发编程 之 管道 Channel">区块链 Go并发编程 之 管道 Channel</a></h2>
+      <p class="excerpt">GO 管道 channel什么是管道  管道是Go语言在语言级别上提供的goroutine间的通讯方式，我们可以使用channel在多个goroutine之间传递消息。channel是进程内的通讯方式，是不支持跨进程通信的，如果需要进程间通讯的话，可以使用Socket等网络方式。也可以简单的理解为：  在多个线程之间传递数据，同步数据的一种手段，而对通道的操作本身也是同步数据，同一时刻，仅有一个线程可以向 channel 发送数据，同样的，同一时刻也只能有一个线程能从 channel 读取...&hellip;</p>
       <div class="post-list__meta">        
-        <time datetime="2018-01-28 00:00:00 +0800" class="post-list__meta--date date">
+        <time datetime="2018-01-30 00:00:00 +0800" class="post-list__meta--date date">
           <img src="/images/calendar.png" width="20px" /> 
-          2018-01-28</time> 
+          2018-01-30</time> 
         <div class = "tag-img-icon">
           <img src="/images/tag-icon.svg" width="20px" /> 
         </div>
@@ -234,7 +234,28 @@
             <span class="post-list__meta--tags-right">并发</span>
           </div>
           <div class = "post-list-small-mate">
-          <a class="btn-border-small" href=/2018/01/28/blockchain-Thread/>阅读全文 » </a>
+          <a class="btn-border-small" href=/2018/01/30/blockchain-Channel/>阅读全文 » </a>
+          </div>
+      </div>
+      <hr class="post-list__divider" />
+    </li>
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/01/29/blockchain-Thread/" title="访问 区块链 GO并发之主线程与子线程">区块链 GO并发之主线程与子线程</a></h2>
+      <p class="excerpt">区块链 GO 并发编程 之 主线程与子线程[toc]基础概念什么是进程？  进程：一个正在运行的程序一般是一个进程，一个进程可以包含多个线程每个进程都有自己的独立的地址空间（内存空间），简单的理解一个运行程序为一个进程什么是线程  线程：一条有序的CPU命令的集合体线程有就绪，阻塞和运行三个基本状态什么是多线程  多线程：多条有序的CPU命令的结合体  备注：一个CPU在同一时刻只能执行一个CPU命令假设只有一个CPU，能不能进行多线程编程  3个线程: 并发编程线程1: 5个命令线程2：...&hellip;</p>
+      <div class="post-list__meta">        
+        <time datetime="2018-01-29 00:00:00 +0800" class="post-list__meta--date date">
+          <img src="/images/calendar.png" width="20px" /> 
+          2018-01-29</time> 
+        <div class = "tag-img-icon">
+          <img src="/images/tag-icon.svg" width="20px" /> 
+        </div>
+        <a href="/tags">
+          <div class = "post-list-icon-mate">
+            <span class="post-list__meta--tags-right">并发</span>
+          </div>
+          <div class = "post-list-small-mate">
+          <a class="btn-border-small" href=/2018/01/29/blockchain-Thread/>阅读全文 » </a>
           </div>
       </div>
       <hr class="post-list__divider" />
@@ -592,27 +613,6 @@
           </div>
           <div class = "post-list-small-mate">
           <a class="btn-border-small" href=/2017/11/10/fabric/>阅读全文 » </a>
-          </div>
-      </div>
-      <hr class="post-list__divider" />
-    </li>
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/11/03/eth-poaA/" title="访问 从零构建基于以太坊（Ethereum）钱包Parity联盟链">从零构建基于以太坊（Ethereum）钱包Parity联盟链</a></h2>
-      <p class="excerpt">  孔壹学院：国内区块链职业教育领先品牌  作者：黎跃春，区块链、高可用架构工程师微信：liyc1215  QQ群：348924182  博客：http://liyuechun.org从零构建基于以太坊（Ethereum）钱包Parity联盟链免费视频：http://www.kongyixueyuan.com/course/5167什么情况下可以建立自己测试用的PoA chain？  公司内网或无对外网络，无法同步区块  降低测试时等待区块的时间  不想碰到testrpc各种雷PoA Ch...&hellip;</p>
-      <div class="post-list__meta">        
-        <time datetime="2017-11-03 00:00:00 +0800" class="post-list__meta--date date">
-          <img src="/images/calendar.png" width="20px" /> 
-          2017-11-03</time> 
-        <div class = "tag-img-icon">
-          <img src="/images/tag-icon.svg" width="20px" /> 
-        </div>
-        <a href="/tags">
-          <div class = "post-list-icon-mate">
-            <span class="post-list__meta--tags-right">联盟链</span>
-          </div>
-          <div class = "post-list-small-mate">
-          <a class="btn-border-small" href=/2017/11/03/eth-poaA/>阅读全文 » </a>
           </div>
       </div>
       <hr class="post-list__divider" />
