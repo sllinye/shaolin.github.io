@@ -5,9 +5,340 @@
     <description>邵林，区块链底层开发者</description>
     <link>https://sllinye.github.io//</link>
     <atom:link href="https://sllinye.github.io//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 31 Jan 2018 23:16:15 +0800</pubDate>
-    <lastBuildDate>Wed, 31 Jan 2018 23:16:15 +0800</lastBuildDate>
+    <pubDate>Wed, 07 Feb 2018 21:11:43 +0800</pubDate>
+    <lastBuildDate>Wed, 07 Feb 2018 21:11:43 +0800</lastBuildDate>
     <generator>Jekyll v3.5.1</generator>
+    
+      <item>
+        <title>区块链 solidity 函数类型</title>
+        <description>&lt;h1 id=&quot;区块链-solidity函数类型&quot;&gt;区块链 solidity函数类型&lt;/h1&gt;
+&lt;h2 id=&quot;solidity-函数访问权限&quot;&gt;solidity 函数访问权限&lt;/h2&gt;
+&lt;p&gt;solidity为函数提供了四种访问权限：public，internal，private，external&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt;：公共函数，内部正常访问，外部正常访问，子类可以继承
+&lt;code class=&quot;highlighter-rouge&quot;&gt;internal&lt;/code&gt;：内部函数，内部正常访问，外部无法访问，子类可以继承。
+&lt;code class=&quot;highlighter-rouge&quot;&gt;private&lt;/code&gt;： 私有函数，内部正常访问，外部无法访问，子类无法继承。
+&lt;code class=&quot;highlighter-rouge&quot;&gt;external&lt;/code&gt;： 外部函数，内部不能访问，外部正常访问，子类可继承。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-solidity&quot;&gt;pragma solidity ^0.4.19;
+
+contract Animal {  
+    // public  公有：外部、内部、子类都可使用
+    function testPublic() public pure returns (string) {
+        return &quot;public&quot;;
+    }
+    // private 私有：合约内部可以正常访问
+    function testPrivate() private pure returns (string) {
+        return &quot;private&quot;;
+    }
+    // internal 内部：合约内部可以正常访问
+    function testInternal() internal pure returns (string) {
+        return &quot;internal&quot;;
+    }
+    // external 外部：只能供外部访问
+    function testExternal() external pure returns (string) {
+        return &quot;external&quot;;
+    }
+// 未做任何修改时，使用pure
+    function f1() public pure {
+        testPublic();
+        testInternal();
+        testPrivate();
+        //testExternal(); // 报错，只能供外部访问
+    }
+
+}
+
+contract Dog is Animal {  
+    // 继承 public、internal、external 类型的函数
+     function f() public pure returns (string) {
+    // testPublic();
+    // testInternal();
+    // testPrivate();
+    // testExternal(); //报错，因为只能供外部访问
+    return testInternal();
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;将案例代码放入&lt;code class=&quot;highlighter-rouge&quot;&gt;https://remix.ethereum.org/&lt;/code&gt;运行一下，得到如下结果
+&lt;img src=&quot;http://p396ounog.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-06%20%E4%B8%8B%E5%8D%8810.56.23.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;solidity类的多继承&quot;&gt;solidity类的多继承&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;可用同时继承多个父类&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-silidity&quot;&gt;pragma solidity ^0.4.19;
+
+contract Animal1 {
+
+  uint age; //默认的就是internal
+  string private sex;//male femal
+
+}
+
+contract Animal2 {
+  uint public weight;//public
+}
+
+ //Dog可以同时继承自多个父类，多继承
+contract Dog is Animal1 , Animal2 {
+  function test() private {
+    age = 100; //成功继承
+    sex = &quot;male&quot;; //报错
+    weight = 130; //成功继承
+  }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;solidity子类重写父类方法&quot;&gt;solidity子类重写父类方法&lt;/h2&gt;
+
+&lt;p&gt;子类重写了父类继承过来的方法，会以子类的方法为基准&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-silidity&quot;&gt;pragma solidity ^ 0.4.19;
+
+// 重写：
+// 子类重写了父类继承过来的方法，会以子类的方法为基准
+contract Animal {
+  function testFunc() public pure returns(string) {
+    return &quot;Animal testFunc&quot;;
+  }
+}
+
+contract Dog is Animal {
+  function testFunc() public pure returns(string) {
+    return &quot;Dog testFunc&quot;;
+  }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;solidity函数中pureviewconstant的用法&quot;&gt;solidity函数中pure、view、constant的用法&lt;/h2&gt;
+&lt;p&gt;solidity函数的格式为：
+&lt;code class=&quot;highlighter-rouge&quot;&gt;function 函数名(参数) public|private|internal|external pure|view|constant 无返回值|returns (返回值类型) &lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;下面案例我们根据案例来总结：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-solidity&quot;&gt;pragma solidity ^0.4.18;
+
+contract HelloWorld {
+
+  uint age = 45;
+  uint weight = 56;
+  uint height = 180;
+  function test() public pure returns (string) {
+    return &quot;HelloWorld!&quot;;
+  }
+
+
+  function getAge() public returns (uint) {
+    return age;
+  }
+
+  function getWeight() public view returns (uint) {
+    return weight;
+  }
+
+  function getHeight() public constant returns (uint) {
+    return height;
+  }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;当函数有返回值，函数中正常来讲需要有 &lt;code class=&quot;highlighter-rouge&quot;&gt;pure&lt;/code&gt;|&lt;code class=&quot;highlighter-rouge&quot;&gt;view&lt;/code&gt;|&lt;code class=&quot;highlighter-rouge&quot;&gt;constant&lt;/code&gt;关键字
+如果没有返回值，在调用函数过程中，需要主动去调用底层的&lt;code class=&quot;highlighter-rouge&quot;&gt;call()&lt;/code&gt;方法
+当函数返回值为全局变量或属性时，可以使用&lt;code class=&quot;highlighter-rouge&quot;&gt;view&lt;/code&gt;或者&lt;code class=&quot;highlighter-rouge&quot;&gt;constant&lt;/code&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;view&lt;/code&gt;可以理解成&lt;code class=&quot;highlighter-rouge&quot;&gt;constant&lt;/code&gt;的新版本，可以简单理解成他们俩等价
+&lt;code class=&quot;highlighter-rouge&quot;&gt;pure&lt;/code&gt; ：如果知识纯粹的返回一个值，直接使用&lt;code class=&quot;highlighter-rouge&quot;&gt;pure&lt;/code&gt;
+反之，使用&lt;code class=&quot;highlighter-rouge&quot;&gt;view&lt;/code&gt;或者&lt;code class=&quot;highlighter-rouge&quot;&gt;constant&lt;/code&gt;即可&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;基本值类型引用类型&quot;&gt;基本值类型、引用类型&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;uint为值类型，为深拷贝
+ string为引用类型，既可以深拷贝，也可以浅拷贝&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;uint及string深拷贝（默认的声明方式即为深拷贝）:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-solidity&quot;&gt;string a = &quot;100&quot;;  
+uint b = 100;
+
+// 浅拷贝
+// string aa 等同于 string memory aa
+function m(string aa) private {  
+    aa = &quot;1000&quot;;
+}
+function n(uint bb) private {  
+    bb = 1000;
+}
+
+function f() public {  
+    m(a)
+    n(b)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;string类型浅拷贝（加storage关键字）:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-solidity&quot;&gt;string a = &quot;100&quot;;  
+function f() public {  
+    m(a)
+}
+
+// 深拷贝
+// memory（深拷贝）、 storage（浅拷贝）
+// 当函数参数为 storage 类型时，函数类型只能为 private 或 internal，否则报错
+function m(string storage aa) private {  
+    //aa = &quot;1000&quot;; // string不能直接修改，需要转换为可变的字节数组
+    bytes(aa)[0] = '6';
+}
+
+function getA() public view returns (string) {  
+    return a;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;注：当函数参数为 storage 类型时，函数类型只能为 private 或 internal&lt;/p&gt;
+</description>
+        <pubDate>Tue, 06 Feb 2018 00:00:00 +0800</pubDate>
+        <link>https://sllinye.github.io//2018/02/06/blockchain-solidity-qx/</link>
+        <guid isPermaLink="true">https://sllinye.github.io//2018/02/06/blockchain-solidity-qx/</guid>
+        
+        <category>solidity</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>区块链 solidity 初识合约</title>
+        <description>&lt;h1 id=&quot;区块链-solidity-初识合约&quot;&gt;区块链 solidity 初识合约&lt;/h1&gt;
+
+&lt;h2 id=&quot;开发钱包&quot;&gt;开发钱包&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;myetherwallet 钱包&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;https://www.myetherwallet.com/&lt;/code&gt;官网 下就可以创建一个新钱包
+&lt;img src=&quot;http://p396ounog.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%20%E4%B8%8B%E5%8D%8810.45.09.png&quot; alt=&quot;&quot; /&gt;
+然后一路下一步，即可创建一个钱包，最后会生成pdf，里面有钱包的&lt;code class=&quot;highlighter-rouge&quot;&gt;二维码&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;Address&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;Private Key&lt;/code&gt;
+保存好这个PDF，除了pdf还有一个种子文件，其实就是一个json串&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;MetaMask 钱包
+&lt;code class=&quot;highlighter-rouge&quot;&gt;MetaMask&lt;/code&gt;是一款在谷歌浏览器&lt;code class=&quot;highlighter-rouge&quot;&gt;Chrome&lt;/code&gt;上使用的插件类型的以太坊钱包，该钱包不需要下载，只需要在谷歌浏览器添加对应的扩展程序即可，非常轻量级，使用起来也非常方便。
+&lt;img src=&quot;http://p396ounog.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-06%20%E4%B8%8A%E5%8D%881.33.04.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;http://p396ounog.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-06%20%E4%B8%8A%E5%8D%881.33.50.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;chrome&lt;/code&gt;浏览器安装&lt;code class=&quot;highlighter-rouge&quot;&gt;MetaMask&lt;/code&gt;后，直接用MetaMask创建钱包或者通过&lt;code class=&quot;highlighter-rouge&quot;&gt;myetherwallet.com&lt;/code&gt;（上面提到的）创建钱包，然后用&lt;code class=&quot;highlighter-rouge&quot;&gt;MetaMask&lt;/code&gt;导入钱包&lt;code class=&quot;highlighter-rouge&quot;&gt;myetherwallet&lt;/code&gt;私钥即可。&lt;/p&gt;
+
+&lt;p&gt;创建钱包完成后，我们一起来看看&lt;code class=&quot;highlighter-rouge&quot;&gt;MetaMask&lt;/code&gt;钱包的主网和测试网&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://p396ounog.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-06%20%E4%B8%8A%E5%8D%8810.06.23.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Main Ethereum Network&lt;/code&gt;是&lt;code class=&quot;highlighter-rouge&quot;&gt;eth&lt;/code&gt;的主网络，真是的币就是存在主网络上，但不建议把真是币存在这里&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Ropsten Test Network&lt;/code&gt;是&lt;code class=&quot;highlighter-rouge&quot;&gt;eth&lt;/code&gt;的测试网
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Kovan Test Network&lt;/code&gt;是&lt;code class=&quot;highlighter-rouge&quot;&gt;eth&lt;/code&gt;的测试网
+这两个均为测试网络，切换不同的测试网会有不同的地址，便于开发使用.&lt;/p&gt;
+
+&lt;p&gt;在测试网络如何获取代币呢？&lt;/p&gt;
+
+&lt;p&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;Ropsten Test Network&lt;/code&gt;，点击&lt;code class=&quot;highlighter-rouge&quot;&gt;BUY&lt;/code&gt;-&amp;gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ROPSTEN TEST FAUCET&lt;/code&gt;会跳转到&lt;code class=&quot;highlighter-rouge&quot;&gt;https://faucet.metamask.io/&lt;/code&gt;页面，可以请求获取测试用的eth代币，也可以给别人发送测试代币。操作完成后钱包会显示相应的测试代币数量。&lt;/p&gt;
+
+&lt;p&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;Kovan Test Network&lt;/code&gt;，获取测试代币的方式是：在&lt;code class=&quot;highlighter-rouge&quot;&gt;https://gitter.im/kovan-testnet&lt;/code&gt;复制当前测试环境下的钱包地址，然后在gitter的社区中，@管理员epheph发送自己的钱包地址&lt;/p&gt;
+
+&lt;h2 id=&quot;atom安装插件&quot;&gt;atom安装插件&lt;/h2&gt;
+&lt;p&gt;solidity编写智能合约在atom编辑器里面编写，需要下载两个插件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;autocomplete-solidity&lt;/code&gt;
+ &lt;code class=&quot;highlighter-rouge&quot;&gt;language-ethereum&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://p396ounog.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-06%20%E4%B8%8A%E5%8D%8811.06.22.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;solidity案例&quot;&gt;solidity案例&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-solidity&quot;&gt;// pragam 关键字
+// solidity 当前语言
+// 0.4 主版本
+// .19 副版本
+// ^向上兼容，solidity （0.4.19~0.4.99）都可以编译，0.5则不能编译
+pragam solidity ^0.4.19;
+
+// construct 关键字声明类
+contract Person {  
+    uint age = 0; // 默认类型为internal
+    string internal name = &quot;lin&quot;;
+    string public homeAddress = &quot;北京市朝阳区&quot;;    // public声明的属性，会自动生成同名的get函数，返回该属性值
+    string private company = &quot;孔壹学院&quot;;
+
+    // 构造函数，与类名同名，首次初始化时调用
+    function Person() public {
+        age = 18;
+    }
+
+    // set方法
+    function setCompany(uint a) public {
+        age = a;
+    }
+    // get方法
+    function getCompany() view public returns (uint) {
+        return age;
+    }
+
+    function getCurrentAddres() view public returns (address) {
+        // msg.sender 返回当前操作合约的钱包的地址
+        return msg.sender;
+    }
+
+    // 普通函数
+    function kill() public{
+        // 析构函数，调用时销毁当前合约
+        selfdestruct(msg.sender);
+    }
+}
+
+contract ChildPerson is Person {  
+    function test() public {
+        age = 100;
+        name = &quot;AWM&quot;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;internal类型的属性:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;可以在合约自己内部和子类中使用
+private类型的属性:
+只能在合约内部自己使用
+public类型的属性:
+除了能够在合约内部和子类中使用以外，还可以自动生成一个get行数，函数名和属性名相同，返回值为属性自己&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;合约部署&quot;&gt;合约部署&lt;/h2&gt;
+&lt;p&gt;打开浏览器，在地址栏输入&lt;code class=&quot;highlighter-rouge&quot;&gt;http://remix.ethereum.org/&lt;/code&gt;直接点击回车键，后面补齐当前最新版的&lt;code class=&quot;highlighter-rouge&quot;&gt;solidity&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sdk&lt;/code&gt;的版本。
+把上面案例代码直接粘贴到左侧编辑器中，会自动编译查错，正常编译通过后，可以在右侧面板点击&lt;code class=&quot;highlighter-rouge&quot;&gt;run&lt;/code&gt;选项。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Environment&lt;/code&gt;指合约要部署的网路环境，&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript VM&lt;/code&gt;是本地的测试网络；&lt;code class=&quot;highlighter-rouge&quot;&gt;injected Web3&lt;/code&gt;是发布到公链。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Account&lt;/code&gt;指部署合约的钱包地址，因为部署合约需要往公链上写数据，所以需要消耗代币。选择本地测试网络的话，有默认的五个免费的钱包，里面各有100eth。选择部署到公链的话，通过选择MateMask的网络环境（主网或两个测试网络），&lt;code class=&quot;highlighter-rouge&quot;&gt;Account&lt;/code&gt;会显示对应的网络环境下的钱包地址（钱包中必须要有代币才行）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Gas limit&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;Value&lt;/code&gt;默认即可&lt;/p&gt;
+
+&lt;p&gt;然后在下面可以选择&lt;code class=&quot;highlighter-rouge&quot;&gt;solidity&lt;/code&gt;代码中声明的类，也就是我们要部署到网络中的类，对应上述代码就是&lt;code class=&quot;highlighter-rouge&quot;&gt;Person&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;ChildPerson&lt;/code&gt;两个类选择其一。&lt;/p&gt;
+
+&lt;p&gt;之后点击&lt;code class=&quot;highlighter-rouge&quot;&gt;create&lt;/code&gt;，支付完所需的代币手续费后，等待部署完成即可，部署成功后便可以在下方看到合约的地址信息，及合约中暴露出来的各种方法，如&lt;code class=&quot;highlighter-rouge&quot;&gt;getAge&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;setAge&lt;/code&gt;等，可以调用这些方法从部署在网络上的合约中写入数据（花费代币）及读取数据（免费），调用&lt;code class=&quot;highlighter-rouge&quot;&gt;kill&lt;/code&gt;方法时会执行析构函数&lt;code class=&quot;highlighter-rouge&quot;&gt;selfdestruct&lt;/code&gt;，从网络中销毁合约。&lt;/p&gt;
+</description>
+        <pubDate>Mon, 05 Feb 2018 00:00:00 +0800</pubDate>
+        <link>https://sllinye.github.io//2018/02/05/blockchain-solidity-chushi/</link>
+        <guid isPermaLink="true">https://sllinye.github.io//2018/02/05/blockchain-solidity-chushi/</guid>
+        
+        <category>solidity</category>
+        
+        
+      </item>
     
       <item>
         <title>区块链 Go并发编程之Channel生产者-消费者模型及单向Channel</title>
@@ -1962,227 +2293,6 @@ $ gdebi --version 0.9.5.7ubuntu1
         <guid isPermaLink="true">https://sllinye.github.io//2017/12/08/mac-ubuntu-data-share/</guid>
         
         <category>Fabric</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Fabric 开发环境配置（1） - Ubuntu操作系统安装配置</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;&lt;a href=&quot;http://www.kongyixueyuan.com&quot;&gt;区块链技术视频：http://www.kongyixueyuan.com&lt;/a&gt;
-&lt;a href=&quot;http://liyuechun.org&quot;&gt;区块链技术博客：http://liyuechun.org&lt;/a&gt;
-进区块链微信技术交流群，添加春哥微信：liyc1215&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;之前&lt;a href=&quot;http://liyuechun.org&quot;&gt;春哥&lt;/a&gt;给大家讲解周末班、公开课以及相关教程时，都是直接使用的&lt;code class=&quot;highlighter-rouge&quot;&gt;Mac OS&lt;/code&gt;，但是我发现&lt;code class=&quot;highlighter-rouge&quot;&gt;40%&lt;/code&gt;的学员用的是&lt;code class=&quot;highlighter-rouge&quot;&gt;Windows&lt;/code&gt;，从这篇文章开始，我将统一用&lt;code class=&quot;highlighter-rouge&quot;&gt;Ubuntu&lt;/code&gt;操作系统写教程、录制视频以及讲解课程。&lt;/p&gt;
-
-&lt;p&gt;这篇文章&lt;a href=&quot;http://liyuechun.org&quot;&gt;春哥&lt;/a&gt;主要为大家分享如何在&lt;code class=&quot;highlighter-rouge&quot;&gt;windows&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;Mac&lt;/code&gt;上安装虚拟机，如何通过虚拟机安装&lt;code class=&quot;highlighter-rouge&quot;&gt;Ubuntu&lt;/code&gt;操作系统，如何配置&lt;code class=&quot;highlighter-rouge&quot;&gt;搜狗&lt;/code&gt;拼音输入法。下篇将为大家分享&lt;code class=&quot;highlighter-rouge&quot;&gt;Fabric 开发环境配置（2） - 虚拟机和主机如何实现文件共享&lt;/code&gt;。&lt;/p&gt;
-
-&lt;h2 id=&quot;目录&quot;&gt;目录&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;#一、下载安装VirtualBox&quot;&gt;一、下载安装VirtualBox&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#二、安装Ubuntu操作系统&quot;&gt;二、安装Ubuntu操作系统&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#三、下篇预告&quot;&gt;三、下篇预告&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;一下载安装virtualbox&quot;&gt;一、下载安装VirtualBox&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;下载&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;移步到&lt;a href=&quot;https://www.virtualbox.org/wiki/Downloads&quot;&gt;https://www.virtualbox.org/wiki/Downloads&lt;/a&gt;网站，如下图所示，选择&lt;code class=&quot;highlighter-rouge&quot;&gt;Windows&lt;/code&gt;或者&lt;code class=&quot;highlighter-rouge&quot;&gt;Mac&lt;/code&gt;操作系统对应的安装包下载并安装。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/WX20171208-095849@2x.png&quot; alt=&quot;VirtualBox 下载安装&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;安装&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;根据不同的操作系统下载对应的版本，直接双击一步步按照提示安装即可。&lt;/p&gt;
-
-&lt;h2 id=&quot;二安装ubuntu操作系统&quot;&gt;二、安装Ubuntu操作系统&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;下载&lt;a href=&quot;https://pan.baidu.com/s/1kVlBMib&quot;&gt;Ubuntu操作系统镜像文件&lt;/a&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/WX20171208-102258@2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;按照步骤通过镜像安装操作系统&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1207_1.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1207_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;选择一个内存大小，内存越大，速度越快&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1207_3.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1207_4.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1207_5.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1207_6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;虚拟硬盘大小设置&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1207_7.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1207_8.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1207_9.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1207_10.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;放心，这里直接往下安装，不会删除你电脑的任何数据和文档&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1208_1.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1208_2.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1208_3.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1208_4.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1208_5.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1208_6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;打开浏览器安装Linux版的搜狗输入法&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1208_13.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1208_14.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;重启虚拟机&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1_1208_7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;三下篇预告&quot;&gt;三、下篇预告&lt;/h2&gt;
-
-&lt;p&gt;到这里相信大家已经在自己的电脑上成功安装虚拟机以及&lt;code class=&quot;highlighter-rouge&quot;&gt;linux&lt;/code&gt;操作系统，但是大家会发现一个问题，在我们的&lt;code class=&quot;highlighter-rouge&quot;&gt;linux&lt;/code&gt;中创建的一些文件和代码怎么直接拷贝到主机，或者说主机的一些文件和资料怎么和虚拟机共享呢，下一小节中，春哥将为大家分享&lt;code class=&quot;highlighter-rouge&quot;&gt;Fabric 开发环境配置（2） - 虚拟机和主机如何实现文件共享&lt;/code&gt;。&lt;/p&gt;
-
-&lt;h2 id=&quot;四技术交流&quot;&gt;四、技术交流&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;区块链技术交流QQ群：&lt;code class=&quot;highlighter-rouge&quot;&gt;348924182&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;进微信群请加微信：&lt;code class=&quot;highlighter-rouge&quot;&gt;liyc1215&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;「区块链部落」官方公众号&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/%E5%8C%BA%E5%9D%97%E9%93%BE%E9%83%A8%E8%90%BD.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 07 Dec 2017 00:00:00 +0800</pubDate>
-        <link>https://sllinye.github.io//2017/12/07/virtual_ubuntu/</link>
-        <guid isPermaLink="true">https://sllinye.github.io//2017/12/07/virtual_ubuntu/</guid>
-        
-        <category>Fabric</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>不管是链圈，还是币圈，你都应该了解矿工、加密货币、矿池生态系</title>
-        <description>&lt;p&gt;用电脑…挖矿？&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1214_01.png&quot; alt=&quot;电脑挖矿&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;所谓挖矿就是让电脑执行特定程序，迭代找出某个值&lt;code class=&quot;highlighter-rouge&quot;&gt;nonce&lt;/code&gt;代入符合&lt;code class=&quot;highlighter-rouge&quot;&gt;HashFunction（TXs+nonce）&amp;lt; TargetDifficulty&lt;/code&gt;的解来给自己「挖出」一些加密货币。&lt;code class=&quot;highlighter-rouge&quot;&gt;Bitcoin&lt;/code&gt;用的函数是两次的&lt;code class=&quot;highlighter-rouge&quot;&gt;SHA256&lt;/code&gt;，而&lt;code class=&quot;highlighter-rouge&quot;&gt;Ethereum&lt;/code&gt;则是使用自己发明的&lt;a href=&quot;https://github.com/ethereum/wiki&quot;&gt;Ethash&lt;/a&gt;算法。&lt;/p&gt;
-
-&lt;p&gt;挖矿的本质就像买乐透，尽管内存块奖励是先抢先赢，算力强的矿工也只是「较有机会」挖到矿，小矿工理论上仍能取得成比例的报酬。但随着全世界的人不断不断的投入资源、建置更多的挖矿设备，现在以个人之力挖到矿的机率已经非常非常小。&lt;/p&gt;
-
-&lt;p&gt;以&lt;code class=&quot;highlighter-rouge&quot;&gt;Ethereum&lt;/code&gt;为例，一张中高阶显卡每秒可以做三千万次&lt;code class=&quot;highlighter-rouge&quot;&gt;Hash&lt;/code&gt;，但挖到矿平均需要一千两百兆次的尝试&lt;code class=&quot;highlighter-rouge&quot;&gt;（2017/7/16）&lt;/code&gt;，算起来平均要&lt;code class=&quot;highlighter-rouge&quot;&gt;1.26&lt;/code&gt;年才会挖到一次，普通矿工根本没办法承受如此不稳定的收入。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;凭个人之力挖矿太看天吃饭，矿工们合起来建造了矿池。&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1214_02.jpeg&quot; alt=&quot;孔壹学院&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;基本上，矿池要解决的是矿工收入不稳定的问题，它把散落的运算资源整合起来一起挖矿，挖到之后再按照每个矿工的贡献比例分钱下去，概念上就像集资包牌买乐透，用众人之力把收入的机率分布摊平。此外，矿池负责维护节点运作，矿工可以专心在运算上，也降低了挖矿的成本，矿池则收取少量手续费。&lt;/p&gt;
-
-&lt;p&gt;理想的矿池和矿工之间的分工大致是这样：矿池藉由连接内存块链网络的节点接收交易信息，产生待打包的内存块广播给矿工，并分配每个矿工负责寻找&lt;code class=&quot;highlighter-rouge&quot;&gt;nonce&lt;/code&gt;的范围。通常矿池会设定一个比较低的门坎，可能是实际&lt;code class=&quot;highlighter-rouge&quot;&gt;target difficulty&lt;/code&gt;的&lt;code class=&quot;highlighter-rouge&quot;&gt;1/1000000&lt;/code&gt;，矿工找到符合的&lt;code class=&quot;highlighter-rouge&quot;&gt;nonce&lt;/code&gt;就回报给矿池，矿池验算后就记录为一个&lt;code class=&quot;highlighter-rouge&quot;&gt;share&lt;/code&gt;，再用每个矿工提交的&lt;code class=&quot;highlighter-rouge&quot;&gt;share&lt;/code&gt;估算贡献比例。因为矿工已经筛选出一些不错的&lt;code class=&quot;highlighter-rouge&quot;&gt;nonce&lt;/code&gt;，矿池可以很容易的从中找出够小的值去符合真正挖矿的标准，层层过滤的过程和淘金矿倒有几分相似。&lt;/p&gt;
-
-&lt;p&gt;就像跟人包牌买乐透怕被独吞一样，难道矿池不担心矿工把可以挖到矿的&lt;code class=&quot;highlighter-rouge&quot;&gt;nonce&lt;/code&gt;私藏，只把挖不到但符合&lt;code class=&quot;highlighter-rouge&quot;&gt;share&lt;/code&gt;标准的&lt;code class=&quot;highlighter-rouge&quot;&gt;nonce&lt;/code&gt;交出来混钱吗？答案是否定的，因为在开始挖矿之前，我们要先决定好的那个&lt;code class=&quot;highlighter-rouge&quot;&gt;TXs&lt;/code&gt;交易纪录内存块里面，就会标示这个块的&lt;code class=&quot;highlighter-rouge&quot;&gt;miner&lt;/code&gt;是谁，所以当矿工对着矿池给好的数据做运算，找出来的&lt;code class=&quot;highlighter-rouge&quot;&gt;valid share&lt;/code&gt;就具有专一性，即使矿工真的找到某个符合&lt;code class=&quot;highlighter-rouge&quot;&gt;Hash（“TX”+nonce）&amp;lt;TargetDifficulty&lt;/code&gt;的值想要自己私藏拿去领赏，最后仍是矿池会收到钱，这个矿工还会少一个&lt;code class=&quot;highlighter-rouge&quot;&gt;share&lt;/code&gt;，理论上没有动机这么做。&lt;/p&gt;
-
-&lt;p&gt;矿池不担心矿工卷款潜逃，但要如何公平地分配收益仍是个困难的问题。目前比较常见的分润模式有：&lt;code class=&quot;highlighter-rouge&quot;&gt;PPS（Pay Per Share），PPLNS（Pay Per Last N Share），RBPPS（Round Base Pay Per Share）&lt;/code&gt;三种，各有优缺点和不同的风险承担角色。&lt;/p&gt;
-
-&lt;p&gt;采&lt;code class=&quot;highlighter-rouge&quot;&gt;PPS&lt;/code&gt;模式的矿池会在矿工每次提交&lt;code class=&quot;highlighter-rouge&quot;&gt;share&lt;/code&gt;的时候立刻认列，是最简单好懂的模式。每个&lt;code class=&quot;highlighter-rouge&quot;&gt;share&lt;/code&gt;的价格是预先决定并动态调整的，相当于矿池「买」了这个&lt;code class=&quot;highlighter-rouge&quot;&gt;share&lt;/code&gt;，矿工的收入稳定，而实际挖到的块多寡则由矿池概括承受，所以通常会抽取较高的手续费。&lt;/p&gt;
-
-&lt;p&gt;相较之下，&lt;code class=&quot;highlighter-rouge&quot;&gt;PPLNS&lt;/code&gt;模式只会在矿池确定有收入的时候才发钱。每次挖到矿会参照矿工前一段时间的&lt;code class=&quot;highlighter-rouge&quot;&gt;share&lt;/code&gt;数分配收益，波动由矿工和矿池共同承担，通常会用随时间递减的权重计算，收入较为平滑，但实作上会比较复杂一点。&lt;/p&gt;
-
-&lt;p&gt;至于&lt;code class=&quot;highlighter-rouge&quot;&gt;RBPPS&lt;/code&gt;则完全由矿工承担风险，它像&lt;code class=&quot;highlighter-rouge&quot;&gt;PPS&lt;/code&gt;一样实时认列，但不直接发钱，而是登记为一个&lt;code class=&quot;highlighter-rouge&quot;&gt;share&lt;/code&gt;，每次挖到块称为一个&lt;code class=&quot;highlighter-rouge&quot;&gt;round&lt;/code&gt;，再依照这个&lt;code class=&quot;highlighter-rouge&quot;&gt;round&lt;/code&gt;期间你占的&lt;code class=&quot;highlighter-rouge&quot;&gt;share&lt;/code&gt;比例分润，矿工收益完全看矿池出块是否稳定。&lt;/p&gt;
-
-&lt;p&gt;因为实作起来简单，&lt;code class=&quot;highlighter-rouge&quot;&gt;RBPPS&lt;/code&gt;是目前许多开源矿池采用的模式，但也存在着一些问题，对总算力低的矿池而言出块间隔长短并不稳定，随着矿工们的&lt;code class=&quot;highlighter-rouge&quot;&gt;share&lt;/code&gt;持续累积，继续挖矿的收益期望值会随着分母上升而递减，矿工有经济诱因在很久没出块时切到其他矿池挖矿，等本来的矿池出块后再切回来，但如果每个矿工都这么做，矿池就停摆了。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import random
-
-selfshare = 0.0
-totalshare = 0.0
-x=0.9
-y=0.09
-z=0.01
-selfreward=0.0
-poolreward=0.0
-
-for i in range(10000):
-	if totalshare &amp;lt;=1:
-		selfshare+=z
-		totalshare+=(y+z)
-		if random.random()&amp;lt;0.1:
-			selfreward+=5*0.1
-			poolreward+=5*0.9
-			selfshare=0
-			totalshare=0
-	else:
-		totalshare+=y
-		if random.random()&amp;lt;0.09:
-			selfreward+=5*selfshare/totalshare
-			poolreward+=5*(1-selfshare/totalshare)
-			selfshare=0
-			totalshare=0
-		else:
-			selfreward+=5*z/(z+x)
-
-print(selfreward)
-print(poolreward)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;此外，也有矿池采用类似线上游戏的&lt;code class=&quot;highlighter-rouge&quot;&gt;DKP&lt;/code&gt;制度，矿工每次挖到块会累积&lt;code class=&quot;highlighter-rouge&quot;&gt;credit&lt;/code&gt;，当有块挖出来的时候就由当时&lt;code class=&quot;highlighter-rouge&quot;&gt;credit&lt;/code&gt;最高的矿工全拿，并把他的&lt;code class=&quot;highlighter-rouge&quot;&gt;credit&lt;/code&gt;归零。但这种模式显然对小矿工不利，期望值算起来大矿工会拿到不符比例多的额外收益。&lt;/p&gt;
-
-&lt;p&gt;总的来说，不同的分润模式都是在追求矿工收入稳定、公平、低矿池风险之间的权衡。大矿池有足够的资源请工程师优化系统，也较能提供矿工稳定的收入，小矿池则有灵活的优势，可以经营名气尚小的潜质币种。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;营运矿池的各种经济考察&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1214_03.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;通常矿工在意的不外乎是矿池的手续费高低、收入波动、服务器稳定度三项重点。矿池收取的手续费除了要付维护系统跟电费的开支，还要在给矿工发薪水的时候承担链上&lt;code class=&quot;highlighter-rouge&quot;&gt;（on-chain）&lt;/code&gt;交易的手续费，所以一般会在累积到一大笔钱的时候再一次性支付。当矿池规模渐渐扩大的时候，光支付就会产生庞大的交易流量，常常处理不完造成堵车。&lt;/p&gt;
-
-&lt;p&gt;最近有&lt;code class=&quot;highlighter-rouge&quot;&gt;Ethereum&lt;/code&gt;矿池尝试用智能合约实现类似&lt;code class=&quot;highlighter-rouge&quot;&gt;Bitcoin&lt;/code&gt;单笔交易包含多地址支付的功能，但似乎会让交易所钱包辨识失败，猜测原因是因为底层节点&lt;code class=&quot;highlighter-rouge&quot;&gt;geth&lt;/code&gt;的监听功能&lt;code class=&quot;highlighter-rouge&quot;&gt;filter&lt;/code&gt;只会对交易的第一组地址有反应，导致后续的交易没被听见，以致于无法触发交易所入账的事件。满期待交易所能改一下构架，否则都不能用智能合约支付，对许多&lt;code class=&quot;highlighter-rouge&quot;&gt;Ethereum&lt;/code&gt;应用来说也挺困扰的。&lt;/p&gt;
-
-&lt;p&gt;目前已经可以在&lt;code class=&quot;highlighter-rouge&quot;&gt;GitHub&lt;/code&gt;上找到几组开源的&lt;code class=&quot;highlighter-rouge&quot;&gt;矿池程序&lt;/code&gt;，稍有经验的人都能轻易的架起矿池。但尽管架池简单，经营倒挺困难，要找到足够的矿工和算力加入才能确保收入稳定。比起矿工是单纯的设备成本收入考察，经营矿池有时候更像在经营社群，需要培养一定的群众，提供不错的周边服务，才能让矿工愿意在收益变化的时候不至于军心溃散，肯留下来跟着矿池一起打拼。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/1215_04.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;原文链接：&lt;code class=&quot;highlighter-rouge&quot;&gt;https://medium.com/taipei-ethereum-meetup/%E5%8A%A0%E5%AF%86%E8%B2%A8%E5%B9%A3%E8%88%87%E4%BB%96%E5%80%91%E7%9A%84%E7%94%A2%E5%9C%B0-21a52c51427f&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;技术交流&quot;&gt;技术交流&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;区块链技术交流QQ群：&lt;code class=&quot;highlighter-rouge&quot;&gt;348924182&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;进微信群请加微信：&lt;code class=&quot;highlighter-rouge&quot;&gt;liyc1215&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;「区块链部落」官方公众号&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/%E5%8C%BA%E5%9D%97%E9%93%BE%E9%83%A8%E8%90%BD.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 04 Dec 2017 00:00:00 +0800</pubDate>
-        <link>https://sllinye.github.io//2017/12/04/token_pool/</link>
-        <guid isPermaLink="true">https://sllinye.github.io//2017/12/04/token_pool/</guid>
-        
-        <category>挖矿</category>
         
         
       </item>

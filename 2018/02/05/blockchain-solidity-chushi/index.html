@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <title>区块链 solidity 初识合约</title>
+  <meta name="description" content="区块链，solidity,myetherwallet,MetaMask,析构函数,合约部署">
+  <meta name="author" content="黎跃春">
+
+  <meta name="keywords" content="区块链，solidity,myetherwallet,MetaMask,析构函数,合约部署"
+  />
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="区块链 solidity 初识合约">
+  <meta name="twitter:description" content="区块链，solidity,myetherwallet,MetaMask,析构函数,合约部署">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="区块链 solidity 初识合约">
+  <meta property="og:description" content="区块链，solidity,myetherwallet,MetaMask,析构函数,合约部署">
+  <meta property="og:site_name" content="区块链，solidity,myetherwallet,MetaMask,析构函数,合约部署e"
+  />
+
+
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+
+
+  <link rel="stylesheet" href=" /css/main.css ">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="https://sllinye.github.io//2018/02/05/blockchain-solidity-chushi/">
+  <link rel="alternate" type="application/rss+xml" title="邵林区块链博客" href="https://sllinye.github.io/ /feed.xml
+    ">
+
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+  <!-- 站点统计 -->
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+
+  <!-- 百度统计 -->
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f3290601666dc2ca016a38c340c144f1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+  
+
+  <!-- google 统计 -->
+  
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-104237177-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</head>
+
+
+<body>
+
+  <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      分类
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+          
+      </div>
+    </span> <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">
+          <a href="/#blog" title="前往 邵林区块链博客 的主页" class="blog-button">
+            <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+            <div class="info">
+              <div class="info-back">
+                <h2 style="font-size: 12px">
+                   微信 
+                   linye900301 
+                </h2>
+                <p style="font-size: 6px">
+                   区块链／链乎 
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for 邵林区块链博客" class="blog-button">邵林区块链博客</a></h1>
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">邵林，区块链底层开发者</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" /> 
+
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                <li class="navigation__item"><a href="/tags" title="tags">分类</a></li>
+                
+                <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;-webkit-justify-content:center">
+          <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-right:10px">
+            <img src="/images/lianhu.jpg" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">公众号</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-left:10px">
+            <img src="/images/zhishixingqiu.png" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">个人微信</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="panel-cover--overlay cover-clear"></div>
+  
+
+  </div>
+</header>
+
+
+  <div class="content-wrapper">
+    <div class="content-wrapper__inner">
+      <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">区块链 solidity 初识合约</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/>
+      <time datetime="2018-02-05 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2018-02-05</time>
+
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <h1 id="区块链-solidity-初识合约">区块链 solidity 初识合约</h1>
+
+<h2 id="开发钱包">开发钱包</h2>
+<ol>
+  <li>myetherwallet 钱包</li>
+</ol>
+
+<p>在<code class="highlighter-rouge">https://www.myetherwallet.com/</code>官网 下就可以创建一个新钱包
+<img src="http://p396ounog.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%20%E4%B8%8B%E5%8D%8810.45.09.png" alt="" />
+然后一路下一步，即可创建一个钱包，最后会生成pdf，里面有钱包的<code class="highlighter-rouge">二维码</code>,<code class="highlighter-rouge">Address</code>,<code class="highlighter-rouge">Private Key</code>
+保存好这个PDF，除了pdf还有一个种子文件，其实就是一个json串</p>
+
+<ol>
+  <li>MetaMask 钱包
+<code class="highlighter-rouge">MetaMask</code>是一款在谷歌浏览器<code class="highlighter-rouge">Chrome</code>上使用的插件类型的以太坊钱包，该钱包不需要下载，只需要在谷歌浏览器添加对应的扩展程序即可，非常轻量级，使用起来也非常方便。
+<img src="http://p396ounog.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-06%20%E4%B8%8A%E5%8D%881.33.04.png" alt="" />
+<img src="http://p396ounog.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-06%20%E4%B8%8A%E5%8D%881.33.50.png" alt="" /></li>
+</ol>
+
+<p>在<code class="highlighter-rouge">chrome</code>浏览器安装<code class="highlighter-rouge">MetaMask</code>后，直接用MetaMask创建钱包或者通过<code class="highlighter-rouge">myetherwallet.com</code>（上面提到的）创建钱包，然后用<code class="highlighter-rouge">MetaMask</code>导入钱包<code class="highlighter-rouge">myetherwallet</code>私钥即可。</p>
+
+<p>创建钱包完成后，我们一起来看看<code class="highlighter-rouge">MetaMask</code>钱包的主网和测试网</p>
+
+<p><img src="http://p396ounog.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-06%20%E4%B8%8A%E5%8D%8810.06.23.png" alt="" /></p>
+
+<p><code class="highlighter-rouge">Main Ethereum Network</code>是<code class="highlighter-rouge">eth</code>的主网络，真是的币就是存在主网络上，但不建议把真是币存在这里</p>
+
+<p><code class="highlighter-rouge">Ropsten Test Network</code>是<code class="highlighter-rouge">eth</code>的测试网
+<code class="highlighter-rouge">Kovan Test Network</code>是<code class="highlighter-rouge">eth</code>的测试网
+这两个均为测试网络，切换不同的测试网会有不同的地址，便于开发使用.</p>
+
+<p>在测试网络如何获取代币呢？</p>
+
+<p>在<code class="highlighter-rouge">Ropsten Test Network</code>，点击<code class="highlighter-rouge">BUY</code>-&gt;<code class="highlighter-rouge">ROPSTEN TEST FAUCET</code>会跳转到<code class="highlighter-rouge">https://faucet.metamask.io/</code>页面，可以请求获取测试用的eth代币，也可以给别人发送测试代币。操作完成后钱包会显示相应的测试代币数量。</p>
+
+<p>在<code class="highlighter-rouge">Kovan Test Network</code>，获取测试代币的方式是：在<code class="highlighter-rouge">https://gitter.im/kovan-testnet</code>复制当前测试环境下的钱包地址，然后在gitter的社区中，@管理员epheph发送自己的钱包地址</p>
+
+<h2 id="atom安装插件">atom安装插件</h2>
+<p>solidity编写智能合约在atom编辑器里面编写，需要下载两个插件
+<code class="highlighter-rouge">autocomplete-solidity</code>
+ <code class="highlighter-rouge">language-ethereum</code></p>
+
+<p><img src="http://p396ounog.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-06%20%E4%B8%8A%E5%8D%8811.06.22.png" alt="" /></p>
+
+<h2 id="solidity案例">solidity案例</h2>
+
+<pre><code class="language-solidity">// pragam 关键字
+// solidity 当前语言
+// 0.4 主版本
+// .19 副版本
+// ^向上兼容，solidity （0.4.19~0.4.99）都可以编译，0.5则不能编译
+pragam solidity ^0.4.19;
+
+// construct 关键字声明类
+contract Person {  
+    uint age = 0; // 默认类型为internal
+    string internal name = "lin";
+    string public homeAddress = "北京市朝阳区";    // public声明的属性，会自动生成同名的get函数，返回该属性值
+    string private company = "孔壹学院";
+
+    // 构造函数，与类名同名，首次初始化时调用
+    function Person() public {
+        age = 18;
+    }
+
+    // set方法
+    function setCompany(uint a) public {
+        age = a;
+    }
+    // get方法
+    function getCompany() view public returns (uint) {
+        return age;
+    }
+
+    function getCurrentAddres() view public returns (address) {
+        // msg.sender 返回当前操作合约的钱包的地址
+        return msg.sender;
+    }
+
+    // 普通函数
+    function kill() public{
+        // 析构函数，调用时销毁当前合约
+        selfdestruct(msg.sender);
+    }
+}
+
+contract ChildPerson is Person {  
+    function test() public {
+        age = 100;
+        name = "AWM";
+    }
+}
+</code></pre>
+
+<blockquote>
+  <p>internal类型的属性:</p>
+  <ul>
+    <li>可以在合约自己内部和子类中使用
+private类型的属性:
+只能在合约内部自己使用
+public类型的属性:
+除了能够在合约内部和子类中使用以外，还可以自动生成一个get行数，函数名和属性名相同，返回值为属性自己</li>
+  </ul>
+</blockquote>
+
+<h2 id="合约部署">合约部署</h2>
+<p>打开浏览器，在地址栏输入<code class="highlighter-rouge">http://remix.ethereum.org/</code>直接点击回车键，后面补齐当前最新版的<code class="highlighter-rouge">solidity</code><code class="highlighter-rouge">sdk</code>的版本。
+把上面案例代码直接粘贴到左侧编辑器中，会自动编译查错，正常编译通过后，可以在右侧面板点击<code class="highlighter-rouge">run</code>选项。</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Environment</code>指合约要部署的网路环境，<code class="highlighter-rouge">JavaScript VM</code>是本地的测试网络；<code class="highlighter-rouge">injected Web3</code>是发布到公链。</li>
+  <li><code class="highlighter-rouge">Account</code>指部署合约的钱包地址，因为部署合约需要往公链上写数据，所以需要消耗代币。选择本地测试网络的话，有默认的五个免费的钱包，里面各有100eth。选择部署到公链的话，通过选择MateMask的网络环境（主网或两个测试网络），<code class="highlighter-rouge">Account</code>会显示对应的网络环境下的钱包地址（钱包中必须要有代币才行）</li>
+</ul>
+
+<p><code class="highlighter-rouge">Gas limit</code>和<code class="highlighter-rouge">Value</code>默认即可</p>
+
+<p>然后在下面可以选择<code class="highlighter-rouge">solidity</code>代码中声明的类，也就是我们要部署到网络中的类，对应上述代码就是<code class="highlighter-rouge">Person</code>和<code class="highlighter-rouge">ChildPerson</code>两个类选择其一。</p>
+
+<p>之后点击<code class="highlighter-rouge">create</code>，支付完所需的代币手续费后，等待部署完成即可，部署成功后便可以在下方看到合约的地址信息，及合约中暴露出来的各种方法，如<code class="highlighter-rouge">getAge</code>、<code class="highlighter-rouge">setAge</code>等，可以调用这些方法从部署在网络上的合约中写入数据（花费代币）及读取数据（免费），调用<code class="highlighter-rouge">kill</code>方法时会执行析构函数<code class="highlighter-rouge">selfdestruct</code>，从网络中销毁合约。</p>
+
+  </section>
+  <h2 style="color:red"><strong>版权声明：博客中的文章版权归博主所有，未经授权，禁止转载，转载请注明出处，合作请联系：linye900301(微信)</strong></h2>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">    
+                    <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2018/01/31/blockchain-Channelsx/" data-toggle="tooltip" data-placement="top" title="区块链 Go并发编程之Channel生产者-消费者模型及单向Channel">上一篇：  <span>区块链 Go并发编程之Channel生产者-消费者模型及单向Channel</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2018/02/06/blockchain-solidity-qx/" data-toggle="tooltip" data-placement="top" title="区块链 solidity 函数类型">下一篇：  <span>区块链 solidity 函数类型</span>
+            </a>
+        </li>
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+  <!--PC和WAP自适应版-->
+<div id="SOHUCS" sid=区块链 solidity 初识合约 ></div>
+<script type="text/javascript">
+(function(){
+var appid = 'cytfSz8yx';
+var conf = 'prod_ad710bf09d342725ed536beddc68aa27';
+var width = window.innerWidth || document.documentElement.clientWidth;
+if (width < 960) {
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+</section>
+
+ <section class="footer">
+  <footer>
+    <div class="footer_div">
+      <nav class="cover-navigation navigation--social">
+        <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/6458465085" title="@6458465085 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+           
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/sllinye" title="@sllinye 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+            
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:sllinye@163.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+        </ul>
+      </nav>
+
+    </div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr id="bar_head">
+          <th colspan="11">友情链接</th>
+        </tr>
+      </thead>
+
+      <tr align="center" valign="middle">
+          <td><a href="http://www.kongyixueyuan.com">区块链技术视频网站</a></td>
+
+          <td><a href="https://www.ethereum.org">以太坊官网</a></td>
+
+          <td><a href="https://solidity.readthedocs.io/en/develop/">Solidity</a></td>
+
+          <td><a href="http://truffleframework.com/">Truffle FrameWork</a></td>
+
+          <td><a href="http://embark.readthedocs.io">Embark FrameWork</a></td>
+
+      </tr>
+      <tr align="center" valign="middle">
+
+          <td><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=3302cc3b-074e-44da-90b1-5055f1dc0d9c&amp;lang=zh">IBM开源技术微讲堂</a></td>
+
+          <td><a href="https://www.bitcoin.com/">Bitcoin.com</a></td>
+
+          <td><a href="https://github.com/bitshares/bitshares1-core">bitshares1-core</a></td>
+
+          <td><a href="https://ipfs.io">ipfs官网</a></td>
+
+          <td><a href="http://ipfser.org">ipfs中文网</a></td>
+
+      </tr>
+    </table>
+
+    <div class="footer_div">
+      <p class="copyright text-muted">
+        Copyright &copy; 2018 邵林区块链博客 京ICP备15065741号. 区块链部落QQ群：348924182
+      </p>
+      <div align="right">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- 访问统计 -->
+        <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+        </span>
+
+      </div>
+      <div>
+  </footer>
+</section>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+</body>
+
+</html>
