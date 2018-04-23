@@ -5,9 +5,70 @@
     <description>邵林，区块链底层开发者</description>
     <link>https://sllinye.github.io//</link>
     <atom:link href="https://sllinye.github.io//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 07 Feb 2018 21:11:43 +0800</pubDate>
-    <lastBuildDate>Wed, 07 Feb 2018 21:11:43 +0800</lastBuildDate>
+    <pubDate>Mon, 23 Apr 2018 22:16:53 +0800</pubDate>
+    <lastBuildDate>Mon, 23 Apr 2018 22:16:53 +0800</lastBuildDate>
     <generator>Jekyll v3.5.1</generator>
+    
+      <item>
+        <title>区块链 EOS vs ETH</title>
+        <description>&lt;h1 id=&quot;eos-vs-eth&quot;&gt;EOS vs ETH&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;行走币圈多年，以前大多炒作都是btc，后来，ETH和EOS慢慢进入人们的视线，并且越来越受欢迎。因为二者让区块链技术更为实用。&lt;/li&gt;
+  &lt;li&gt;Eth和EOS均为公链，促进Dapps的发展，但ETH和EOS的底层架构，市场和技术却完全不同。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;那么下面向大家介绍一下二者的区别：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;dapp市场的竞争对手&quot;&gt;Dapp市场的竞争对手&lt;/h4&gt;
+&lt;p&gt;2015以太坊问世，是一个运行智能合约的去中心化平台。由于这些合约是在区块链中开发，可以有效的排除欺诈和人为恶意的修改。&lt;/p&gt;
+
+&lt;p&gt;EOS采用与ETH类似的运营模式，尽管Eth是第一个在该领域退出的平台。目前eos尚未退出公链，将在6月上线（指日可待）。&lt;/p&gt;
+
+&lt;p&gt;虽然有相似之处，但从技术来看，二者并不完全相同。在eos的技术上可以实现每秒处理大量的交易数。&lt;/p&gt;
+
+&lt;p&gt;####ETH和EOS的差异&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;编程语言
+ETH开发对程序员来讲，需要掌握一门新的语言：Solidity（V神略显炫技）。
+EOS开发程序员可以直接使用C++编程。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;共识协议
+ETH目前使用工作量证明（Pow）共识协议，该协议每秒15笔交易。一旦出了问题，ETH无法直接修复公链上的Dapper，只能通过硬分叉解决。&lt;/p&gt;
+
+    &lt;p&gt;EOS用的是股份委托证明（DPoS）协议，DPoS最大的特点是，允许程序员在发现损坏的应用程序时立即冻结网络。冻结期间，程序员可以修复有问题的程序，不会对网络中的其他程序产生负面影响。&lt;/p&gt;
+
+    &lt;p&gt;Pow要求矿工证明他们能够以最快的速度验证网络上的交易，从未获得奖励。然而通过DPoS协议，token的持有者负责验证交易并形成共识的代表节点。这些节点也因执行这项工作而获得报酬。&lt;/p&gt;
+
+    &lt;p&gt;EOS采用这种更为民主的共识方法，规避了PoW与PoS区块链的相关风险–防止大户通过坐拥大量token，对整个网络做出不公平的决策。&lt;/p&gt;
+
+    &lt;p&gt;目前，ETH正在采取措施解决当前瓶颈。近期，ETH宣布他们计划推出Casper协议–可以理解为它是PoS（Proof of Stake 基于权益证明算法）的一种代称，如果说PoW是以抵押算力作为代价来提高作弊的成本，那么PoS则是靠抵押代币作为代价来提高作弊成本，那么PoS作为共识算法，即可以极大节省资源，同事又可以极大降低交易时间，这样解决了PoW两个致命缺陷。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;市场
+  ETH层通过不同方式获得不同投资者的支持，曾经有人认为ETH将成为在金融服务行业建立数字平台的组织的智能合约的平台。&lt;/p&gt;
+
+    &lt;p&gt;EOS公链尚未推出，但围绕它的炒作已经很多，从技术上看，它比ETH的集中度更低，运行效率更高。&lt;/p&gt;
+
+    &lt;p&gt;Dapp在区块链上运行时，eos没有交易费用，会大大减轻用户的财务负担。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;可扩展性
+  不过在可扩展性方面，EOS相比以太坊网络而言有两个显著优势，一旦实施，EOS将很可能成为唯一可以真正处理商业级的去中心化应用。首先，EOS依赖已经在压力测试中展现出每秒1万至10万笔交易处理能力的石墨烯技术。其次EOS将使用并发技术来扩展网络，或将达到每秒数百万次的交易处理能力。如果这些基准得以实现，EOS将能够支持数千个商业规模的DAPPs。EOS将使用异步通讯并将认证与执行过程分离来实现加速。并且由于没有交易费用，EOS也不需要计数操作。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;随着时间的演进，二者的技术不断更新，我们期待更好的技术服务于大众。&lt;/p&gt;
+</description>
+        <pubDate>Mon, 23 Apr 2018 00:00:00 +0800</pubDate>
+        <link>https://sllinye.github.io//2018/04/23/blockchain-eth-eos/</link>
+        <guid isPermaLink="true">https://sllinye.github.io//2018/04/23/blockchain-eth-eos/</guid>
+        
+        <category>币圈</category>
+        
+        
+      </item>
     
       <item>
         <title>区块链 solidity 函数类型</title>
@@ -2079,220 +2140,6 @@ $ gdebi --version 0.9.5.7ubuntu1
         <guid isPermaLink="true">https://sllinye.github.io//2018/01/02/Filecoin-2017-Q4-Update/</guid>
         
         <category>IPFS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Fabric 开发环境配置（2） - Ubuntu虚拟机和Mac/Windows主机如何实现文件共享</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;&lt;a href=&quot;http://www.kongyixueyuan.com&quot;&gt;区块链技术视频：http://www.kongyixueyuan.com&lt;/a&gt;&lt;/p&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://liyuechun.org&quot;&gt;区块链技术博客：http://liyuechun.org&lt;/a&gt;&lt;/p&gt;
-
-  &lt;p&gt;进区块链微信技术交流群，添加春哥微信：liyc1215&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;目录&quot;&gt;目录&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;#1- VirtualBox虚拟机网络设置&quot;&gt;1. VirtualBox虚拟机网络设置&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#11-NAT-网络地址转换模式NAT-Network-Address-Translation&quot;&gt;1.1 NAT 网络地址转换模式(NAT,Network Address Translation)&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#12- Bridged-Adapter-桥接模式&quot;&gt;1.2 Bridged Adapter 桥接模式&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#2- Mac/Windows和Ubuntu双向拷贝&quot;&gt;2. Mac/Windows和Ubuntu双向拷贝&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#3-文件共享&quot;&gt;3. 文件共享&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#31-Bridged-Adapter网络配置&quot;&gt;3.1 Bridged Adapter网络配置&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#32-在Ubuntu上安装Samba服务器&quot;&gt;3.2 在Ubuntu上安装Samba服务器&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#33-设置要共享的文件夹&quot;&gt;3.3 设置要共享的文件夹&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#34-在Ubuntu上配置Samba服务器&quot;&gt;3.4 在Ubuntu上配置Samba服务器&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#35-添加共享文件&quot;&gt;3.5 添加共享文件&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#36-Mac/Windows访问Ubuntu共享文件夹&quot;&gt;3.6 Mac/Windows访问Ubuntu共享文件夹&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#4-小结&quot;&gt;4. 小结&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;在上一篇文档&lt;a href=&quot;http://liyuechun.org/2017/12/07/virtual_ubuntu/&quot;&gt;Fabric 开发环境配置（1） - Ubuntu操作系统安装配置&lt;/a&gt;中，我们介绍了&lt;code class=&quot;highlighter-rouge&quot;&gt;Mac/Windows&lt;/code&gt;如何安装虚拟机、如何在虚拟机中安装&lt;code class=&quot;highlighter-rouge&quot;&gt;Ubuntu&lt;/code&gt;操作系统以及如何安装配置搜狗输入法。&lt;/p&gt;
-
-&lt;p&gt;这篇文章，&lt;a href=&quot;http://liyuechun.org&quot;&gt;春哥&lt;/a&gt;将为大家介绍&lt;strong&gt;Ubuntu虚拟机和Mac/Windows主机如何实现文件共享&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;h2 id=&quot;1-virtualbox虚拟机网络设置&quot;&gt;1. VirtualBox虚拟机网络设置&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;VirtualBox虚拟机网络设置一共有下面四种方式：&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;1、&lt;code class=&quot;highlighter-rouge&quot;&gt;NAT&lt;/code&gt; 网络地址转换模式&lt;code class=&quot;highlighter-rouge&quot;&gt;(NAT,Network Address Translation) &lt;/code&gt;
-2、&lt;code class=&quot;highlighter-rouge&quot;&gt;Bridged Adapter&lt;/code&gt;桥接模式 
-3、&lt;code class=&quot;highlighter-rouge&quot;&gt;Internal&lt;/code&gt; 内部网络模式 
-4、&lt;code class=&quot;highlighter-rouge&quot;&gt;Host-only Adapter&lt;/code&gt; 主机模式&lt;/p&gt;
-
-&lt;p&gt;在本篇文章中，我主要介绍&lt;code class=&quot;highlighter-rouge&quot;&gt;NAT&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;Bridged Adapter&lt;/code&gt;两种模式。&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NAT&lt;/code&gt;不能实现主机和虚拟机互通，&lt;code class=&quot;highlighter-rouge&quot;&gt;Bridged Adapter&lt;/code&gt;可以实现主机与虚拟机互通。&lt;/strong&gt; &lt;/p&gt;
-
-&lt;h3 id=&quot;11-nat-网络地址转换模式natnetwork-address-translation&quot;&gt;1.1 NAT 网络地址转换模式(NAT,Network Address Translation)&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NAT&lt;/code&gt;模式是最简单的实现虚拟机上网的方式，你可以这样理解：&lt;code class=&quot;highlighter-rouge&quot;&gt;Vhost&lt;/code&gt;访问网络的所有数据都是由主机提供的，&lt;code class=&quot;highlighter-rouge&quot;&gt;Vhost&lt;/code&gt;并不真实存在于网络中，主机与网络中的任何机器都不能查看和访问到&lt;code class=&quot;highlighter-rouge&quot;&gt;Vhost&lt;/code&gt;的存在。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;虚拟机与主机关系：&lt;/strong&gt;只能单向访问，虚拟机可以通过网络访问到主机，主机无法通过网络访问到虚拟机。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;虚拟机与网络中其他主机的关系：&lt;/strong&gt;只能单向访问，虚拟机可以访问到网络中其他主机，其他主机不能通过网络访问到虚拟机。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;虚拟机与虚拟机之间的关系：&lt;/strong&gt;相互不能访问，虚拟机与虚拟机各自完全独立，相互间无法通过网络访问彼此。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;虚拟机的IP、网关、DNS&lt;/strong&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_16.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;NAT方案缺点：&lt;/strong&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;由于虚拟机和主机IP不在同一个网段，所以主机没办法和虚拟机实现文件共享。&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;12-bridged-adapter-桥接模式&quot;&gt;1.2 Bridged Adapter 桥接模式&lt;/h3&gt;
-
-&lt;p&gt;网桥模式是我最喜欢的用的一种模式，同时，模拟度也是相当完美。你可以这样理解，它是通过主机网卡，架设了一条桥，直接连入到网络中了。因此，它使得虚拟机能被分配到一个网络中&lt;strong&gt;独立的IP&lt;/strong&gt;，所有网络功能完全和在网络中的真实机器一样。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;虚拟机与主机关系：&lt;/strong&gt; 可以相互访问，因为虚拟机在真实网络段中有独立&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;，主机与虚拟机处于同一网络段中，彼此可以通过各自&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;相互访问。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;虚拟机与网络中其他主机关系：&lt;/strong&gt;可以相互访问，同样因为虚拟机在真实网络段中有独立&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;，虚拟机与所有网络其他主机处于同一网络段中，彼此可以通过各自&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;相互访问。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;虚拟机与虚拟机关系：&lt;/strong&gt; 可以相互访问。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;IP：&lt;/strong&gt;一般是&lt;code class=&quot;highlighter-rouge&quot;&gt;DHCP&lt;/code&gt;分配的，与主机的&lt;code class=&quot;highlighter-rouge&quot;&gt;本地连接&lt;/code&gt;的&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;是同一网段的。虚拟机就能与主机互相通信。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;笔记本已插网线时：&lt;/strong&gt;（若网络中有&lt;code class=&quot;highlighter-rouge&quot;&gt;DHCP&lt;/code&gt;服务器）主机与虚拟机会通过&lt;code class=&quot;highlighter-rouge&quot;&gt;DHCP&lt;/code&gt;分别得到一个&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;，这两个&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;在同一网段。 主机与虚拟机可以&lt;code class=&quot;highlighter-rouge&quot;&gt;ping&lt;/code&gt;通，虚拟机可以上互联网。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;笔记本没插网线时：&lt;/strong&gt;&lt;strong&gt;主机与虚拟机不能通信。&lt;/strong&gt;主机的&lt;code class=&quot;highlighter-rouge&quot;&gt;本地连接&lt;/code&gt;有红叉，就不能手工指定&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;。虚拟机也不能通过&lt;code class=&quot;highlighter-rouge&quot;&gt;DHCP&lt;/code&gt;得到&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;地址，手工指定&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;后，也无法与主机通信，因为主机无&lt;code class=&quot;highlighter-rouge&quot;&gt;IP。&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-macwindows和ubuntu双向拷贝&quot;&gt;2. Mac/Windows和Ubuntu双向拷贝&lt;/h2&gt;
-
-&lt;p&gt;默认情况下，虚拟机和主机之间的拷贝的数据不能直接粘贴，我们可以通过下面的设置来实现数据双向拷贝。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Virtual Box&lt;/code&gt;设置&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/WX20171208-151709@2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/WX20171208-151954@2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/install_tool.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;按照上面三个步骤设置完以后，接下来你就可以实现虚拟机与主机双向拷贝。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/%E4%B8%BB%E6%9C%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%8F%8C%E5%90%91%E6%8B%B7%E8%B4%9D-iloveimg-compressed.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-文件共享&quot;&gt;3. 文件共享&lt;/h2&gt;
-
-&lt;p&gt;由于&lt;code class=&quot;highlighter-rouge&quot;&gt;NAT&lt;/code&gt;网络虚拟机和主机&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;地址不在同一个网段，因此需要通过&lt;code class=&quot;highlighter-rouge&quot;&gt;Bridged Adapter&lt;/code&gt;模式来实现虚拟机和主机在同一个局域网。&lt;/p&gt;
-
-&lt;h3 id=&quot;31-bridged-adapter网络配置&quot;&gt;3.1 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bridged Adapter&lt;/code&gt;网络配置&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;连接网线,连接网线,连接网线&lt;/strong&gt;重要的事情别人说三遍，我习惯说四遍。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_20.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Bridged Adapter&lt;/code&gt;配置&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_23.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_24.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_25.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_26.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;IP&lt;/code&gt;地址查询，&lt;code class=&quot;highlighter-rouge&quot;&gt;ping&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_27.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_28.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/mac_ping_ubuntu.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;32-在ubuntu上安装samba服务器&quot;&gt;3.2 在Ubuntu上安装Samba服务器&lt;/h3&gt;
-
-&lt;p&gt;你可以很方便地在Ubuntu电脑上安装&lt;code class=&quot;highlighter-rouge&quot;&gt;Samba&lt;/code&gt;。安装前，请先更新系统以便安装任何可用的更新。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get update &amp;amp;&amp;amp; apt-get upgrade
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;然后按照这条命令安装&lt;code class=&quot;highlighter-rouge&quot;&gt;samba&lt;/code&gt;和少量所需的软件包：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt-get install samba samba-common system-config-samba python-glade2 gksu
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;一旦安装完成&lt;code class=&quot;highlighter-rouge&quot;&gt;Samba&lt;/code&gt;服务器，就可以从图形界面配置&lt;code class=&quot;highlighter-rouge&quot;&gt;Samba&lt;/code&gt;来分享文件。&lt;/p&gt;
-
-&lt;h3 id=&quot;33-设置要共享的文件夹&quot;&gt;3.3 设置要共享的文件夹&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_35.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_36.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_37.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;34-在ubuntu上配置samba服务器&quot;&gt;3.4 在Ubuntu上配置Samba服务器&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_29.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_30.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_31.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_32.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_33.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_34.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;35-添加共享文件&quot;&gt;3.5 添加共享文件&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_38.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_39.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_40.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;36-macwindows访问ubuntu共享文件夹&quot;&gt;3.6 Mac/Windows访问Ubuntu共享文件夹&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_41.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_42.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_43.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_44.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/Snip20171208_45.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/20171208173445.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-小结&quot;&gt;4. 小结&lt;/h2&gt;
-
-&lt;p&gt;本篇文章主要为大家介绍了VirtualBox虚拟机网络设置&lt;code class=&quot;highlighter-rouge&quot;&gt;NAT&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;Bridged Adapter 桥接模式&lt;/code&gt;之间的区别，如何配置&lt;code class=&quot;highlighter-rouge&quot;&gt;Bridged Adapter 桥接模式&lt;/code&gt;以实现主机和虚拟机之间在同一个局域网。&lt;code class=&quot;highlighter-rouge&quot;&gt;SMB&lt;/code&gt;服务器安装配置，数据共享相关设置。&lt;/p&gt;
-
-&lt;h2 id=&quot;5技术交流&quot;&gt;5、技术交流&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;区块链技术交流QQ群：&lt;code class=&quot;highlighter-rouge&quot;&gt;348924182&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;进微信群请加微信：&lt;code class=&quot;highlighter-rouge&quot;&gt;liyc1215&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;「区块链部落」官方公众号&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/%E5%8C%BA%E5%9D%97%E9%93%BE%E9%83%A8%E8%90%BD.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 08 Dec 2017 00:00:00 +0800</pubDate>
-        <link>https://sllinye.github.io//2017/12/08/mac-ubuntu-data-share/</link>
-        <guid isPermaLink="true">https://sllinye.github.io//2017/12/08/mac-ubuntu-data-share/</guid>
-        
-        <category>Fabric</category>
         
         
       </item>
