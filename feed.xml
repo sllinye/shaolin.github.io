@@ -5,9 +5,78 @@
     <description>邵林，区块链底层开发者</description>
     <link>https://sllinye.github.io//</link>
     <atom:link href="https://sllinye.github.io//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 23 Apr 2018 22:16:53 +0800</pubDate>
-    <lastBuildDate>Mon, 23 Apr 2018 22:16:53 +0800</lastBuildDate>
+    <pubDate>Fri, 08 Jun 2018 22:43:12 +0800</pubDate>
+    <lastBuildDate>Fri, 08 Jun 2018 22:43:12 +0800</lastBuildDate>
     <generator>Jekyll v3.5.1</generator>
+    
+      <item>
+        <title>区块链 PBFT 拜占庭将军问题</title>
+        <description>&lt;h1 id=&quot;拜占庭将军问题&quot;&gt;拜占庭将军问题&lt;/h1&gt;
+
+&lt;p&gt;接触区块链的童鞋，多少都听说过拜占庭将军问题，经常看到或听到某某区块链使用某某算法解决了拜占庭将军问题，那么究竟什么是拜占庭将军问题呢?&lt;/p&gt;
+
+&lt;h3 id=&quot;什么是拜占庭将军问题&quot;&gt;什么是拜占庭将军问题&lt;/h3&gt;
+
+&lt;p&gt;也被称为“拜占庭容错”、“拜占庭将军问题”。
+拜占庭将军问题是Leslie Lamport（2013年的图灵讲得住）用来为描述分布式系统一致性问题（Distributed Consensus）在&lt;a href=&quot;http://lamport.azurewebsites.net/pubs/byz.pdf&quot;&gt;论文&lt;/a&gt;中抽象出来一个著名的例子&lt;/p&gt;
+
+&lt;p&gt;这个例子大意是这样的：&lt;/p&gt;
+
+&lt;p&gt;拜占庭帝国想要进攻一个强大的敌人，为此派出了10支军队去包围这个敌人。这个敌人虽不比拜占庭帝国，但也足以抵御5支常规拜占庭军队的同时袭击。这10支军队在分开的包围状态下同时攻击。他们任一支军队单独进攻都毫无胜算，除非有至少6支军队（一半以上）同时袭击才能攻下敌国。他们分散在敌国的四周，依靠通信兵骑马相互通信来协商进攻意向及进攻时间。困扰这些将军的问题是，他们不确定他们中是否有叛徒，叛徒可能擅自变更进攻意向或者进攻时间。在这种状态下，拜占庭将军们才能保证有多于6支军队在同一时间一起发起进攻，从而赢取战斗？&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;拜占庭将军问题中并不去考虑通信兵是否会被截获或无法传达信息等问题，即消息传递的信道绝无问题。Lamport已经证明了在消息可能丢失的不可靠信道上试图通过消息传递的方式达到一致性是不可能的。所以，在研究拜占庭将军问题的时候，已经假定了信道是没有问题的.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;单从上面的说明可能无法理解这个问题的复杂性我们来简单分析一下&quot;&gt;单从上面的说明可能无法理解这个问题的复杂性，我们来简单分析一下：&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;先看在没有叛徒情况下，假如一个将军A提一个进攻提议（如：明日下午1点进攻，你愿意加入吗？）由通信兵通信分别告诉其他的将军，如果幸运中的幸运，他收到了其他6位将军以上的同意，发起进攻。如果不幸，其他的将军也在此时发出不同的进攻提议（如：明日下午2点、3点进攻，你愿意加入吗？），由于时间上的差异，不同的将军收到（并认可）的进攻提议可能是不一样的，这是可能出现A提议有3个支持者，B提议有4个支持者，C提议有2个支持者等等。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;再加一点复杂性，在有叛徒情况下，一个叛徒会向不同的将军发出不同的进攻提议（通知A明日下午1点进攻， 通知B明日下午2点进攻等等），一个叛徒也会可能同意多个进攻提议（即同意下午1点进攻又同意下午2点进攻）。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;叛徒发送前后不一致的进攻提议，被称为“拜占庭错误”，而能够处理拜占庭错误的这种容错性称为「Byzantine fault tolerance」，简称为BFT。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;中本聪的解决方案&quot;&gt;中本聪的解决方案&lt;/h3&gt;
+
+&lt;p&gt;在出现比特币之前，解决分布式系统一致性问题主要是Lamport提出的Paxos算法或其衍生算法。Paxos类算法仅适用于中心化的分布式系统，这样的系统的没有不诚实的节点（不会发送虚假错误消息，但允许出现网络不通或宕机出现的消息延迟）。&lt;/p&gt;
+
+&lt;p&gt;中本聪在比特币中创造性的引入了“工作量证明（POW : Proof of Work）”来解决这个问题。&lt;/p&gt;
+
+&lt;p&gt;通过工作量证明就增加了发送信息的成本，降低节点发送消息速率，这样就以保证在一个时间只有一个节点(或是很少)在进行广播，同时在广播时会附上自己的签名。
+这个过程就像一位将军A在向其他的将军（B、C、D…）发起一个进攻提议一样，将军B、C、D…看到将军A签过名的进攻提议书，如果是诚实的将军就会立刻同意进攻提议，而不会发起自己新的进攻提议。&lt;/p&gt;
+
+&lt;p&gt;以上就是比特币网络中是单个区块（账本）达成共识的方法（取得一致性）。&lt;/p&gt;
+
+&lt;p&gt;理解了单个区块取得一致性的方法，那么整个区块链（总账本）如果达成一致也好理解。
+我们稍微把将军问题改一下：假设攻下一个城堡需要多次的进攻，每次进攻的提议必须基于之前最多次数的胜利进攻下提出的（只有这样敌方已有损失最大，我方进攻胜利的可能性就更大），这样约定之后，将军A在收到进攻提议时，就会检查一下这个提议是不是基于最多的胜利提出的，如果不是（基于最多的胜利）将军A就不会同意这样的提议，如果是的，将军A就会把这次提议记下来。&lt;/p&gt;
+
+&lt;p&gt;这就是比特币网络最长链选择。&lt;/p&gt;
+
+&lt;h3 id=&quot;经济学分析&quot;&gt;经济学分析&lt;/h3&gt;
+
+&lt;p&gt;工作量证明其实相当于提高了做叛徒（发布虚假区块）的成本，在工作量证明下，只有第一个完成证明的节点才能广播区块，竞争难度非常大，需要很高的算力，如果不成功其算力就白白的耗费了（算力是需要成本的），如果有这样的算力作为诚实的节点，同样也可以获得很大的收益（这就是矿工所作的工作），这也实际就不会有做叛徒的动机，整个系统也因此而更稳定。&lt;/p&gt;
+
+&lt;p&gt;很多人批评工作量证明造成巨大的电力浪费，促使人们去探索新的解决一致性（共识）问题的机制：权益证明机制（POS: Proof of Stake）是一个代表。在拜占庭将军问题的角度来看，它同样提高了做叛徒的成本，因为账户需要首先持有大量余额才能有更多的几率广播区块，POS不是本文重点，以后在讲。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;共识算法的核心就是解决拜占庭将军问题（分布式网络一致性问题）。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Fri, 08 Jun 2018 00:00:00 +0800</pubDate>
+        <link>https://sllinye.github.io//2018/06/08/blockchain-PBFT/</link>
+        <guid isPermaLink="true">https://sllinye.github.io//2018/06/08/blockchain-PBFT/</guid>
+        
+        <category>PBFT</category>
+        
+        
+      </item>
     
       <item>
         <title>区块链 EOS vs ETH</title>
@@ -26,7 +95,7 @@
 
 &lt;p&gt;虽然有相似之处，但从技术来看，二者并不完全相同。在eos的技术上可以实现每秒处理大量的交易数。&lt;/p&gt;
 
-&lt;p&gt;####ETH和EOS的差异&lt;/p&gt;
+&lt;h4 id=&quot;eth和eos的差异&quot;&gt;ETH和EOS的差异&lt;/h4&gt;
 &lt;ul&gt;
   &lt;li&gt;
     &lt;p&gt;编程语言
@@ -1973,173 +2042,6 @@ $ gdebi --version 0.9.5.7ubuntu1
         <guid isPermaLink="true">https://sllinye.github.io//2018/01/05/rrcoin-pdf/</guid>
         
         <category>白皮书</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Filecoin 2017 Q4 Update</title>
-        <description>&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/filecoin-header-2017-q4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Dear Filecoin supporters, miners, users, investors, and broader community,&lt;/p&gt;
-
-&lt;p&gt;Since the completion of the token sale, we have been heads down turning Filecoin’s tremendous potential into reality – from implementing the core parts of the Filecoin protocol to growing our team with the best talent we can find. Below is an update from our team, as well as a set of specific “asks” for you, our community.&lt;/p&gt;
-
-&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;#1-CommunityUpdates-an-Overview&quot;&gt;Community Updates - an Overview&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#2-Asks-How-You-Can-Help&quot;&gt;Asks - How You Can Help&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#3-Launch-of-the-Filecoin-Blog&quot;&gt;Launch of the Filecoin Blog&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#4-Growth-and-Adoption-of-IPFS&quot;&gt;Growth and Adoption of IPFS&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#5-Launch-of-the-SAFT-Project&quot;&gt;Launch of the SAFT project&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#6-Growing-the-Team&quot;&gt;Growing the Team&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#7-Filecoin-Engineering-Development&quot;&gt;Filecoin Engineering &amp;amp; Development&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#8-Investor-SAFTs-and-Warnings&quot;&gt;Investor SAFTs and Warnings&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#9-CoinList&quot;&gt;CoinList&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#10-Clients-and-Miners&quot;&gt;Clients &amp;amp; Miners&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;1-community-updates---an-overview&quot;&gt;1. Community Updates - an Overview&lt;/h2&gt;
-&lt;p&gt;These updates will keep the Filecoin Community up to date on the progress of the Filecoin project and its &lt;a href=&quot;https://protocol.ai/projects/&quot;&gt;supporting projects&lt;/a&gt; (ie. &lt;a href=&quot;https://ipfs.io/&quot;&gt;IPFS&lt;/a&gt;, &lt;a href=&quot;https://libp2p.io/&quot;&gt;libp2p&lt;/a&gt;, &lt;a href=&quot;https://saftproject.com/&quot;&gt;the SAFT project&lt;/a&gt;, and others). We will also ask for your help. Keep an eye out for explicit “asks”, which highlight ways you can contribute to the success of Filecoin. We plan to broadcast these updates periodically – at least once a quarter, and in some cases more frequently. We will publish these to our new blog, and send them by email to our partners, investors, prospective users &amp;amp; miners, and general subscribers.&lt;/p&gt;
-
-&lt;p&gt;Finally, we strongly encourage an open line of communication, with any suggestions, ideas, questions, feedback, or other thoughts. Please use this suggestion form or email us at team@filecoin.io with your comments. With thousands of people involved, we may take some time to respond, but we will read your note. This year, as our team’s capacity grows and we get closer to a testnet launch, we will open official community forums where the discussion can blossom broadly.&lt;/p&gt;
-
-&lt;h2 id=&quot;2-asks---how-you-can-help&quot;&gt;2. Asks - How You Can Help&lt;/h2&gt;
-&lt;p&gt;We have a unique opportunity to leverage the collective knowledge, capabilities, and networks of our formidable community to accelerate the success of Filecoin. We will be asking for your help along several dimensions: research problems, development and testing, organization building, partnerships, recruiting, and more.&lt;/p&gt;
-
-&lt;p&gt;Here are some top priorities that our community can help us with in the short-term:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Refer candidates to hire (see list of high priority open positions in item 6 below)&lt;/li&gt;
-  &lt;li&gt;Refer potential early storage users (Filecoin Early Users form)&lt;/li&gt;
-  &lt;li&gt;Refer potential early miners (Filecoin Early Mining form)&lt;/li&gt;
-  &lt;li&gt;Ideas, Suggestions, anything else? Please fill out our suggestion form&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Asks like these are typical in updates to project supporters, though perhaps more typical in private communications. We choose to publish these broadly, as we believe everybody in our community can contribute tremendously to the success of Filecoin, and it is in our shared interest to do so. The success of Filecoin will benefit all our community – miners, clients, partners, users, researchers, investors, developers, and more. Naturally, we require more from groups who have made strong commitments – such as developers and investors – but we want everybody to feel invited and empowered to help!&lt;/p&gt;
-
-&lt;h2 id=&quot;3-launch-of-the-filecoin-blog&quot;&gt;3. Launch of the Filecoin Blog&lt;/h2&gt;
-&lt;p&gt;This update marks the launch of the new Filecoin Blog. We have cross-posted all Filecoin specific posts from the Protocol Labs Blog, which we had been using to publish Filecoin news. Henceforth, this will be the main channel for Filecoin announcements.&lt;/p&gt;
-
-&lt;p&gt;We have lots of plans for this blog in 2018. Expect to see technical deep-dives, explainers, event announcements, periodic updates like this one, and more. If you would like to request certain kinds of posts, feel free to send us suggestions.&lt;/p&gt;
-
-&lt;h2 id=&quot;4-growth-and-adoption-of-ipfs&quot;&gt;4. Growth and Adoption of IPFS&lt;/h2&gt;
-&lt;p&gt;IPFS and Filecoin are complementary protocols: IPFS addresses and moves content, and Filecoin is the missing incentive structure. Continued development of IPFS provides an important support layer for the Filecoin Protocol and continued adoption of IPFS signals increasing market demand for a faster, safer, decentralized storage service.&lt;/p&gt;
-
-&lt;p&gt;Over the past few months the IPFS Community and the IPFS Network have made great strides. There were major releases for both go-ipfs (0.4.11, 0.4.12, 0.4.13) and js-ipfs (0.26.0, 0.27.0). People continue to build exciting apps on IPFS. For example, OpenBazaar shipped their 2.0 release, powered by IPFS, and grew their network to 25,000 nodes. There is a new integration of IPFS directly in the Brave browser. Computes are building a distributed supercomputer with IPFS. Researchers in Australia have put Hadoop on IPFS for peer-to-peer data analytics. It keeps getting easier to build applications like these. PeerPad is an open source app (in alpha) that shows how developers can use IPFS to build their own serverless, real-time, offline-first collaborative dapps. Cloudy is a GNU/Linux distribution built around decentralization and community networks. More and more projects in the blockchain ecosystem rely on IPFS and libp2p. New such projects include: DTube, a decentralized video platform; Bloom, a decentralized credit scoring system; Decentraland, a virtual reality platform; and more. We have also seen IPFS appear in important sociopolitical issues. When the Spanish government blocked access to information about the independence referendum in Catalonia, activists used IPFS to distribute censorship-resistant websites with sample ballots and lists of polling locations.&lt;/p&gt;
-
-&lt;p&gt;IPFS continues to grow steadily, serve larger sets of users and more kinds of applications. But there is a lot more work to do to enable people and communities worldwide to control what data is stored on their machines and on their networks. The IPFS maintainers and the broader IPFS community are tackling that work with verve. Many IPFS developers eagerly await the arrival of Filecoin, which will enable large-scale decentralized storage for IPFS applications.&lt;/p&gt;
-
-&lt;h2 id=&quot;5-launch-of-the-saft-project&quot;&gt;5. Launch of the SAFT Project&lt;/h2&gt;
-&lt;p&gt;Over the past year we’ve dedicated a significant amount of energy and resources to develop a framework for legally compliant token sales. While the Filecoin Sale was the first use of that framework, we formally launched the SAFT Project in October - a collaboration between Protocol Labs, Cooley, and many other token creators, legal experts, and investors. Our goal is to approach legal protocol development the same way we approach software protocol development: with a thoughtful community, strong goals, and rigorous work. We hope our efforts will save creators much of the current headache, uncertainty, and cost associated with raising money for token networks.&lt;/p&gt;
-
-&lt;p&gt;The reception and adoption has been tremendous. SAFTs have been used by token creators and investors to transact in dozens of token sales. It is estimated that close to or more than half a billion dollars has been transacted with SAFTs and recent regulatory action is congruent with the SAFT framework’s assessments. To find out more visit the SAFT Project Website and Github, or review some recent press from CoinDesk, CoinCenter, Forbes and The Economist.&lt;/p&gt;
-
-&lt;h2 id=&quot;6-growing-the-team&quot;&gt;6. Growing the Team&lt;/h2&gt;
-&lt;p&gt;Ambitious projects like Filecoin succeed or fail depending on their teams. One of our top priorities – in the past, present, and future – is to grow our team with brilliant, masterful, hardworking people who share our vision and mission. Our recruiting is focused on strengthening the core engineering, research, and business development teams, as well as filling a few key operational roles.&lt;/p&gt;
-
-&lt;p&gt;Our network is large thanks to you. We need your help sourcing as many excellent candidates for our open positions. As a distributed team, we hire anywhere in the world, and at various levels of experience (entry, senior, staff, etc). We look for people with unique perspectives and diverse backgrounds. If you – or someone you know – may be a good fit, please apply.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Software Engineer, Distributed Systems&lt;/li&gt;
-  &lt;li&gt;Software Engineer, Peer-to-Peer Networks&lt;/li&gt;
-  &lt;li&gt;Software Engineer, Blockchain&lt;/li&gt;
-  &lt;li&gt;Software Engineer, Infrastructure and Devops&lt;/li&gt;
-  &lt;li&gt;Software Engineer, Testing&lt;/li&gt;
-  &lt;li&gt;Software Engineer, Security&lt;/li&gt;
-  &lt;li&gt;Software Engineer, Cryptography&lt;/li&gt;
-  &lt;li&gt;Software Engineer, Frontend&lt;/li&gt;
-  &lt;li&gt;Research Scientist, Cryptography&lt;/li&gt;
-  &lt;li&gt;Research Scientist, Distributed Systems&lt;/li&gt;
-  &lt;li&gt;Research Scientist, Networking&lt;/li&gt;
-  &lt;li&gt;Open Source Project Manager&lt;/li&gt;
-  &lt;li&gt;Open Source Product Manager&lt;/li&gt;
-  &lt;li&gt;User Experience Designer&lt;/li&gt;
-  &lt;li&gt;U.S. Legal Counsel&lt;/li&gt;
-  &lt;li&gt;Legal Project Manager&lt;/li&gt;
-  &lt;li&gt;Head of Finance&lt;/li&gt;
-  &lt;li&gt;Investor Relations Manager&lt;/li&gt;
-  &lt;li&gt;Asset Manager&lt;/li&gt;
-  &lt;li&gt;Communications Lead&lt;/li&gt;
-  &lt;li&gt;People Ops Coordinator&lt;/li&gt;
-  &lt;li&gt;…and more.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;For a full list, please visit our current openings page. Please take a moment to share these role(s) with your network or email us with suggestions. We must cast a wide net in order to find the best candidates, and you can help us significantly in this effort.&lt;/p&gt;
-
-&lt;h2 id=&quot;7-filecoin-engineering--development&quot;&gt;7. Filecoin Engineering &amp;amp; Development&lt;/h2&gt;
-&lt;p&gt;We have been hard at work on implementing the Filecoin Protocol. Filecoin builds on the strong foundations laid by IPFS, libp2p, and Ethereum. This means a large number of very difficult pieces are already implemented, and we can focus on connecting these battle-tested components.&lt;/p&gt;
-
-&lt;p&gt;The bulk of our implementation work involves building and testing new Filecoin-specific parts, which are still monumental endeavors. This includes:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;the Filecoin Blockchain data structures and algorithms.&lt;/li&gt;
-  &lt;li&gt;the State Tree, which represents all world state for files, accounts, and contracts on Filecoin.&lt;/li&gt;
-  &lt;li&gt;the core contracts that will manage file Storage, Repair, Retrieval, and Mining.&lt;/li&gt;
-  &lt;li&gt;contract execution itself, optimized for Filecoin.&lt;/li&gt;
-  &lt;li&gt;library contracts for user agents, data storage and exchange, and other protocols.&lt;/li&gt;
-  &lt;li&gt;low-level primitives such as Proofs-of-Replication and Proofs-of-Spacetime.&lt;/li&gt;
-  &lt;li&gt;the Filecoin mining protocol, sequential work, and consensus.&lt;/li&gt;
-  &lt;li&gt;economic structures, such as miner pledges, collaterals, storage and retrieval payments.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;We invite anybody interested in any of these parts, both research and implementation, to contact us at team@filecoin.io, specially people with backgrounds in cryptography research or distributed systems implementation.&lt;/p&gt;
-
-&lt;h3 id=&quot;71-blockchain-ecosystem-rd&quot;&gt;7.1. Blockchain Ecosystem R&amp;amp;D&lt;/h3&gt;
-
-&lt;p&gt;We continue to review and be inspired by the excellent work of other protocols and the academic community. In particular, we are paying close attention to many interesting developments, which may improve Filecoin. Here are some examples:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Ethereum&lt;/strong&gt; has inspired lots of our work, and we are building with it. The list of things we leverage from Ethereum is long – the Blockchain state and execution models, the EVM, contract interfaces, and so on. Two recent interesting contributions are the addition of primitives required for zk-SNARKs directly to the EVM, and the exploration of WebAssembly as a compilation target (eWASM).&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Zcash:&lt;/strong&gt; The Zcash team has been a leader in the development and application of zk-SNARKs, and is continuously pushing forward new research and improvements. Recent exciting developments include work on the BLS12-381 curve, and the Powers of Tau parameter generation ceremony.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Polkadot:&lt;/strong&gt; the team pursues many protocol and system improvements based on learnings from implementing Ethereum and many other protocols. One such decision: to formally distinguish and use hard-coding and soft-coding of core contracts where relevant, with a scheduled replacement (user space vs kernel space).&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Tezos:&lt;/strong&gt; we continue to study other VM and smart contract execution systems, especially those that aim towards formal verification. We applaud their work in this area, and continue to watch closely, as we believe blockchains desperately need programming languages with better properties (verifiability, stronger type systems, etc).&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Ethereum verification:&lt;/strong&gt; in the same vein, we are studying and experimenting with works that build safer languages on top of the EVM. There have been several promising papers, and we will be conducting evaluations and experiments in this area.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Of course&lt;/strong&gt;, we continue to leverage the improvements made by our teams and communities in the IPFS, libp2p, IPLD, and multiformats projects. These are also leveraged by other blockchain projects, which will build a stronger, more robust, and interoperable Web 3.0.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;STARKs and Bulletproofs:&lt;/strong&gt; it is a great time for verifiable computation. STARKs and Bulletproofs are two transparent non-interactive zero-knowledge proof systems, which Filecoin may use for some of its proof algorithms. We are exploring tradeoffs and constructions.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;72-open-problems-and-rfps&quot;&gt;7.2 Open Problems and RFPs&lt;/h3&gt;
-&lt;p&gt;Early in 2018, we will launch listings of open problems and a Request-for-Proposal (RFP) program to inspire and support work. The Open Problem listing will give us a venue to draw attention to important directions for improvements – for Filecoin and blockchains in general. The RFPs will allow us to motivate and reward people who help us solve those problems and implement their solutions. Keep an eye out for announcements!&lt;/p&gt;
-
-&lt;h2 id=&quot;8-investor-safts-and-warnings&quot;&gt;8. Investor SAFTs and Warnings&lt;/h2&gt;
-&lt;p&gt;In October, all investor SAFTs were sent out by email. We heard some of these emails were caught in spam filters, so to avoid issues we will be re-sending them again soon. We have also added a cryptographic signature to the SAFTs that verifies its validity, so the new version you will receive will be the definitive one. For more information on how to treat SAFTs and how tokens will be issued, please read the sale completion post or email us at sale@filecoin.io.&lt;/p&gt;
-
-&lt;p&gt;Investor caution: during and after the Filecoin token sale we’ve seen several attempts to defraud investors from actors claiming to be selling Filecoin SAFTs or tokens. Similarly, we’ve seen unscrupulous exchanges listing Filecoin and Filecoin derivatives. Remember that the Filecoin token will not be live until network launch, and any exchange that lists Filecoin or IPFS tokens is likely fraudulent. We strongly recommend not trusting any exchange or entity who claims to be buying, selling, or trading Filecoin tokens or derivatives. We will announce here when the Filecoin Network and token go live, until then we strongly recommend staying away from such actors and exchanges.&lt;/p&gt;
-
-&lt;h2 id=&quot;9-coinlist&quot;&gt;9. CoinList&lt;/h2&gt;
-&lt;p&gt;We originally launched CoinList to make token-based fundraising easy and legally compliant. The platform innovated on many fronts. It developed new legal frameworks by introducing the SAFT instrument for the first time. It raised the bar for legal compliance. It introduced new payment options, accepting ETH, BTC, ZEC, and USD simultaneously. It incorporated security improvements, such as an IPFS-hosted HD Wallet verification tool. And it improved the investor experience through a modern user interface and structured email support.&lt;/p&gt;
-
-&lt;p&gt;The Filecoin sale proved the CoinList platform. Since then, the project has attracted new token creators looking to launch their projects and more investors looking to invest in crypto-assets. To give the platform the attention it deserves, Protocol Labs and AngelList spun out CoinList as its own separate company with a dedicated team. Since September, CoinList has already completed two more sales – Blockstack and PROPS – and has grown into the leading platform for token fundraising and investment.&lt;/p&gt;
-
-&lt;p&gt;During the transition, Filecoin SAFTs were temporarily removed from the CoinList platform, and will be added back in early 2018. For more information on CoinList, please visit coinlist.co.&lt;/p&gt;
-
-&lt;h2 id=&quot;10-clients-and-miners&quot;&gt;10. Clients and Miners&lt;/h2&gt;
-&lt;p&gt;Finally, the Filecoin Network is off to a very strong start. Tens of thousands of very enthusiastic early storage users and miners have already signed up for our early user and early miner programs. Currently we’re meeting with a small but wide-ranging subset of them, gathering insights to inform our design of onboarding experiences, market incentives, and more. Please spread the word on these forms – if you or someone you know are interested in becoming storage users or miners, notifying us sooner will help us plan with you.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;For interested storage users, fill out the Filecoin Early Users form.&lt;/li&gt;
-  &lt;li&gt;For interested miners, fill out the Filecoin Early Mining form.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Thank you for all your support so far, and in the future. And thank you in advance for your referrals, ideas, and suggestions. Your help is critical to our progress.&lt;/p&gt;
-
-&lt;p&gt;All of us at Protocol Labs and the Filecoin Team wish you the best for the holidays, and for 2018, which should be a great year for all of us :)&lt;/p&gt;
-
-&lt;p&gt;The Filecoin Team&lt;/p&gt;
-
-&lt;p&gt;Protocol Labs&lt;/p&gt;
-
-&lt;h2 id=&quot;加入链乎问答社区&quot;&gt;加入链乎问答社区&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://om1c35wrq.bkt.clouddn.com/zhishixingqiu.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 02 Jan 2018 00:00:00 +0800</pubDate>
-        <link>https://sllinye.github.io//2018/01/02/Filecoin-2017-Q4-Update/</link>
-        <guid isPermaLink="true">https://sllinye.github.io//2018/01/02/Filecoin-2017-Q4-Update/</guid>
-        
-        <category>IPFS</category>
         
         
       </item>
